@@ -32,7 +32,6 @@ public class LudoDie extends JPanel implements MouseListener {
 	
 	//Timer to control animation
 	Timer animTimer ;
-
 	public LudoDie(){
 		setSize(dieCubeWidth,dieCubeHeight);
 		setVisible(true);
@@ -153,6 +152,7 @@ public class LudoDie extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {		
+
 		if (animTimer !=null){
 			return;			
 		}
@@ -165,11 +165,9 @@ public class LudoDie extends JPanel implements MouseListener {
 				frames++;
 				if(frames == 10){
 					animTimer.stop();
-					animTimer= null;
-					
+					animTimer= null;		
 				}
 			}
-			
 		});
 		animTimer.start();
 	}

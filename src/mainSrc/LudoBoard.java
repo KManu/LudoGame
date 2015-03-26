@@ -3,12 +3,10 @@ package mainSrc;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.*;
 
-public class LudoBoard extends JFrame {
-	
-	/**
-	 * 
-	 */
+public class LudoBoard extends JFrame implements MouseListener , KeyListener  {
+
 	private static final long serialVersionUID = 1L;
 
 	int screenX,screenY ;
@@ -26,6 +24,7 @@ public class LudoBoard extends JFrame {
 		setVisible(true);
 		
 		//Die settings
+		
 		ludoDie.setLoc(getContentPane().getWidth()/2 -25, getContentPane().getHeight()/2 -50);
 		add(ludoDie);
 		
@@ -46,6 +45,56 @@ public class LudoBoard extends JFrame {
 	public static void main(String [] args){
 		@SuppressWarnings("unused")
 		LudoBoard test = new LudoBoard();
+	}
+	
+	//LISTENERS
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 
