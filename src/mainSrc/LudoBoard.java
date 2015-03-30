@@ -10,7 +10,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 
 	int screenX,screenY ;
 	public static int sizeWidth=BoardConstants.BOARD_SIZE.width;
-
+	
 	public static int sizeHeight=BoardConstants.BOARD_SIZE.height;
 	int jumpSpotWidth = BoardConstants.BOARD_JUMPSPOT_SIZE.width;
 	int jumpSpotHeight = BoardConstants.BOARD_JUMPSPOT_SIZE.height;
@@ -52,7 +52,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	             RenderingHints.VALUE_ANTIALIAS_ON);		
 	    graph2d.setRenderingHints(rh);
 	    
-	   // drawGrid(graph2d);
+	    drawGrid(graph2d);
 		
 	    //Drawing paths
 	    graph2d.setStroke(new BasicStroke(3));

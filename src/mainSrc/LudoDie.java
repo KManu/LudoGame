@@ -64,6 +64,7 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 	
 	private void drawDie(Graphics2D graph, int val, int x, int y) {
 		Color dieGrey = new Color(240,240,240);
+		Color transCOlor = new Color(0.5f,0.3f,0.7f,0.5f);
 		
 		//graph.fillRect(x, y, dieCubeSizeX, dieCubeSizeY);
 		//creating the border for the die
@@ -95,28 +96,34 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 		int y31 = y+38;
 		int y33 = y+ 38;
 		
-		graph.setColor(Color.GRAY);
+		graph.setColor(transCOlor);
+
 
 		if(val == 1){
+			
 			graph.fillOval(x22,y22,holeWidth,holeHeight);
 		}
 		else if(val == 2){
+			graph.setColor(LUDO_GREEN);
 			graph.fillOval(x11,y11,holeWidth,holeHeight);
 			graph.fillOval(x33,y33,holeWidth,holeHeight);
 		}
 		else if(val == 3){
+			graph.setColor(LUDO_YELLOW);
 			graph.fillOval(x11,y11,holeWidth,holeHeight);
 			graph.fillOval(x33,y33,holeWidth,holeHeight);
 			graph.fillOval(x22,y22,holeWidth,holeHeight);
 			
 		}
 		else if(val == 4){
+			graph.setColor(LUDO_RED);
 			graph.fillOval(x13,y13,holeWidth,holeHeight);
 			graph.fillOval(x11,y11,holeWidth,holeHeight);
 			graph.fillOval(x33,y33,holeWidth,holeHeight);
 			graph.fillOval(x31,y31,holeWidth,holeHeight);
 		}
 		else if (val == 5){
+			graph.setColor(LUDO_BLUE);
 			graph.fillOval(x13,y13,holeWidth,holeHeight);
 			graph.fillOval(x11,y11,holeWidth,holeHeight);
 			graph.fillOval(x33,y33,holeWidth,holeHeight);
