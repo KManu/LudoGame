@@ -1,6 +1,7 @@
 package mainSrc;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -52,63 +53,63 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	             RenderingHints.VALUE_ANTIALIAS_ON);		
 	    graph2d.setRenderingHints(rh);
 	    
-	    drawGrid(graph2d);
+	    
 		
 	    //Drawing paths
 	    graph2d.setStroke(new BasicStroke(3));
 	    graph2d.setColor(Color.WHITE);
-	    graph2d.drawLine(sizeWidth/2, 150, sizeWidth/2, sizeHeight/2 -60); // top center vert path
-	    graph2d.drawLine(sizeWidth/2, 150+(6*60), sizeWidth/2, sizeHeight/2 -60+(6*60)); //bottom center vert path
-	    graph2d.drawLine(150, sizeHeight/2, 150+(4*60), sizeHeight/2); // left center horz path
-	    graph2d.drawLine(150+(6*60), sizeHeight/2, 150+(4*60)+(6*60), sizeHeight/2); // right center horz path
-	    graph2d.drawLine(sizeWidth/2-60,150, sizeHeight/2 +60, 150); // top horz path
-	    graph2d.drawLine(sizeWidth/2-60,150+(10*60), sizeWidth/2 +60, 150+(10*60)); //bottom horz path
-	    graph2d.drawLine(150, sizeHeight/2-60, 150, sizeHeight/2 +60); // left vert path
-	    graph2d.drawLine(150+(10*60), sizeHeight/2-60, 150+(10*60), sizeHeight/2 +60); 
-	    graph2d.drawLine(sizeWidth/2-60, 150, sizeWidth/2-60,sizeHeight/2 -60); //top left vert path
-	    graph2d.drawLine(sizeWidth/2+60, 150, sizeWidth/2+60,sizeHeight/2 -60);  // top right vert path
-	    graph2d.drawLine(sizeWidth/2-60, 150+(6*60), sizeWidth/2-60,sizeHeight/2 -60 +(6*60)); //bottom left vert path
-	    graph2d.drawLine(sizeWidth/2+60, 150+(6*60), sizeWidth/2+60,sizeHeight/2 -60+(6*60));  // bottom right vert path
-	    graph2d.drawLine(150,sizeHeight/2-60, sizeWidth/2-60, sizeHeight/2-60); //left top horz path
-	    graph2d.drawLine(150,sizeHeight/2-60+(2*60), sizeWidth/2-60, sizeHeight/2-60+(2*60));  // left bottom horz path
-	    graph2d.drawLine(150+(6*60),sizeHeight/2-60, sizeWidth/2-60+(6*60), sizeHeight/2-60); //right top horz path
-	    graph2d.drawLine(150+(6*60),sizeHeight/2-60+(2*60), sizeWidth/2-60+(6*60), sizeHeight/2-60+(2*60));  // right bottom horz path 
+	    graph2d.drawLine(sizeWidth/2, 150, sizeWidth/2, sizeHeight/2 -unitGrid); // top center vert path
+	    graph2d.drawLine(sizeWidth/2, 150+(6*unitGrid), sizeWidth/2, sizeHeight/2 -unitGrid+(6*unitGrid)); //bottom center vert path
+	    graph2d.drawLine(150, sizeHeight/2, 150+(4*unitGrid), sizeHeight/2); // left center horz path
+	    graph2d.drawLine(150+(6*unitGrid), sizeHeight/2, 150+(4*unitGrid)+(6*unitGrid), sizeHeight/2); // right center horz path
+	    graph2d.drawLine(sizeWidth/2-unitGrid,150, sizeHeight/2 +unitGrid, 150); // top horz path
+	    graph2d.drawLine(sizeWidth/2-unitGrid,150+(10*unitGrid), sizeWidth/2 +unitGrid, 150+(10*unitGrid)); //bottom horz path
+	    graph2d.drawLine(150, sizeHeight/2-unitGrid, 150, sizeHeight/2 +unitGrid); // left vert path
+	    graph2d.drawLine(150+(10*unitGrid), sizeHeight/2-unitGrid, 150+(10*unitGrid), sizeHeight/2 +unitGrid); 
+	    graph2d.drawLine(sizeWidth/2-unitGrid, 150, sizeWidth/2-unitGrid,sizeHeight/2 -unitGrid); //top left vert path
+	    graph2d.drawLine(sizeWidth/2+unitGrid, 150, sizeWidth/2+unitGrid,sizeHeight/2 -unitGrid);  // top right vert path
+	    graph2d.drawLine(sizeWidth/2-unitGrid, 150+(6*unitGrid), sizeWidth/2-unitGrid,sizeHeight/2 -unitGrid +(6*unitGrid)); //bottom left vert path
+	    graph2d.drawLine(sizeWidth/2+unitGrid, 150+(6*unitGrid), sizeWidth/2+unitGrid,sizeHeight/2 -unitGrid+(6*unitGrid));  // bottom right vert path
+	    graph2d.drawLine(150,sizeHeight/2-unitGrid, sizeWidth/2-unitGrid, sizeHeight/2-unitGrid); //left top horz path
+	    graph2d.drawLine(150,sizeHeight/2-unitGrid+(2*unitGrid), sizeWidth/2-unitGrid, sizeHeight/2-unitGrid+(2*unitGrid));  // left bottom horz path
+	    graph2d.drawLine(150+(6*unitGrid),sizeHeight/2-unitGrid, sizeWidth/2-unitGrid+(6*unitGrid), sizeHeight/2-unitGrid); //right top horz path
+	    graph2d.drawLine(150+(6*unitGrid),sizeHeight/2-unitGrid+(2*unitGrid), sizeWidth/2-unitGrid+(6*unitGrid), sizeHeight/2-unitGrid+(2*unitGrid));  // right bottom horz path 
 	    graph2d.setStroke(new BasicStroke(1));
 	    
 	    
 		//drawing jump spots
 	    drawSpots(sizeWidth/2, 150, 5, graph2d, "Vertical"); // top center jump spots
-	    drawSpots(sizeWidth/2-60, 150, 5, graph2d, "Vertical"); // top left jump spots
-	    drawSpots(sizeWidth/2+60,150,5,graph2d,"Vertical"); //top right jump spots
+	    drawSpots(sizeWidth/2-unitGrid, 150, 5, graph2d, "Vertical"); // top left jump spots
+	    drawSpots(sizeWidth/2+unitGrid,150,5,graph2d,"Vertical"); //top right jump spots
 	    
-	    drawSpots(sizeWidth/2, 150+(6*60), 5, graph2d, "Vertical"); // bottom center jump spots
-	    drawSpots(sizeWidth/2-60, 150+(6*60), 5, graph2d, "Vertical"); // bottom left jump spots
-	    drawSpots(sizeWidth/2+60,150+(6*60),5,graph2d,"Vertical"); //bottom right jump spots
+	    drawSpots(sizeWidth/2, 150+(6*unitGrid), 5, graph2d, "Vertical"); // bottom center jump spots
+	    drawSpots(sizeWidth/2-unitGrid, 150+(6*unitGrid), 5, graph2d, "Vertical"); // bottom left jump spots
+	    drawSpots(sizeWidth/2+unitGrid,150+(6*unitGrid),5,graph2d,"Vertical"); //bottom right jump spots
 	    
 	    drawSpots(150, sizeHeight/2, 5, graph2d, "Horizontal"); // left center jump spots
-	    drawSpots(150, sizeHeight/2-60, 5, graph2d, "Horizontal"); // left top jump spots
-	    drawSpots(150, sizeHeight/2+60, 5, graph2d, "Horizontal"); //left bottom jump spots
+	    drawSpots(150, sizeHeight/2-unitGrid, 5, graph2d, "Horizontal"); // left top jump spots
+	    drawSpots(150, sizeHeight/2+unitGrid, 5, graph2d, "Horizontal"); //left bottom jump spots
 	    
-	    drawSpots(150+(6*60), sizeHeight/2, 5, graph2d, "Horizontal"); // right center jump spots
-	    drawSpots(150+(6*60), sizeHeight/2-60, 5, graph2d, "Horizontal"); // right top jump spots
-	    drawSpots(150+(6*60), sizeHeight/2+60, 5, graph2d, "Horizontal"); //right bottom jump spots
+	    drawSpots(150+(6*unitGrid), sizeHeight/2, 5, graph2d, "Horizontal"); // right center jump spots
+	    drawSpots(150+(6*unitGrid), sizeHeight/2-unitGrid, 5, graph2d, "Horizontal"); // right top jump spots
+	    drawSpots(150+(6*unitGrid), sizeHeight/2+unitGrid, 5, graph2d, "Horizontal"); //right bottom jump spots
 	    
 	    //redrawing colored jump spots
 	    graph2d.setColor(LUDO_GREEN);
-	    drawSpots(sizeWidth/2, 150+60, 4, graph2d, "Vertical"); // top center colored jump spots
-	    drawSpots(sizeWidth/2+60, 150, 1, graph2d, "");
+	    drawSpots(sizeWidth/2, 150+unitGrid, 4, graph2d, "Vertical"); // top center colored jump spots
+	    drawSpots(sizeWidth/2+unitGrid, 150, 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_YELLOW);
-	    drawSpots(150+(6*60), sizeHeight/2, 4, graph2d, "Horizontal"); // right center colored jump spots
-	    drawSpots(sizeWidth/2-60+(6*60), sizeHeight/2-60+(2*60), 1, graph2d, "");
+	    drawSpots(150+(6*unitGrid), sizeHeight/2, 4, graph2d, "Horizontal"); // right center colored jump spots
+	    drawSpots(sizeWidth/2-unitGrid+(6*unitGrid), sizeHeight/2-unitGrid+(2*unitGrid), 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_BLUE);
-	    drawSpots(sizeWidth/2, 150+(6*60), 4, graph2d, "Vertical"); // bottom center colored jump spots
-	    drawSpots(sizeWidth/2-60,150+(10*60), 1, graph2d, "");
+	    drawSpots(sizeWidth/2, 150+(6*unitGrid), 4, graph2d, "Vertical"); // bottom center colored jump spots
+	    drawSpots(sizeWidth/2-unitGrid,150+(10*unitGrid), 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_RED);
-	    drawSpots(150+60, sizeHeight/2, 4, graph2d, "Horizontal"); // left center jump spots
-	    drawSpots(150,sizeHeight/2-60,1, graph2d, "");
+	    drawSpots(150+unitGrid, sizeHeight/2, 4, graph2d, "Horizontal"); // left center jump spots
+	    drawSpots(150,sizeHeight/2-unitGrid,1, graph2d, "");
 	    
 	    //Draw bases
 	    graph2d.setStroke(new BasicStroke(3));
@@ -122,28 +123,31 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	    
 	    //Drawing base spots
 	    graph2d.setColor(LUDO_RED);
-	    drawSpots(150+60, 150+60, 1, graph2d, "");
-	    drawSpots(150+60, 150+60+60, 1, graph2d, "");
-	    drawSpots(150+60+60, 150+60, 1, graph2d, "");
-	    drawSpots(150+60+60, 150+60+60, 1, graph2d, "");
+	    drawSpots(150+unitGrid, 150+unitGrid, 1, graph2d, "");
+	    drawSpots(150+unitGrid, 150+unitGrid+unitGrid, 1, graph2d, "");
+	    drawSpots(150+unitGrid+unitGrid, 150+unitGrid, 1, graph2d, "");
+	    drawSpots(150+unitGrid+unitGrid, 150+unitGrid+unitGrid, 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_BLUE);
-	    drawSpots(150+60, sizeHeight/2 +(3*60), 1, graph2d, "");
-	    drawSpots(150+60+60, sizeHeight/2 +(3*60), 1, graph2d, "");
-	    drawSpots(150+60, sizeHeight/2 +(3*60)+60, 1, graph2d, "");
-	    drawSpots(150+60+60, sizeHeight/2 +(3*60)+60, 1, graph2d, "");
+	    drawSpots(150+unitGrid, sizeHeight/2 +(3*unitGrid), 1, graph2d, "");
+	    drawSpots(150+unitGrid+unitGrid, sizeHeight/2 +(3*unitGrid), 1, graph2d, "");
+	    drawSpots(150+unitGrid, sizeHeight/2 +(3*unitGrid)+unitGrid, 1, graph2d, "");
+	    drawSpots(150+unitGrid+unitGrid, sizeHeight/2 +(3*unitGrid)+unitGrid, 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_GREEN);
-	    drawSpots(sizeWidth/2 +(3*60), 150+60, 1, graph2d, "");
-	    drawSpots(sizeWidth/2 +(3*60)+60, 150+60, 1, graph2d, "");
-	    drawSpots(sizeWidth/2 +(3*60), 150+60+60, 1, graph2d, "");
-	    drawSpots(sizeWidth/2 +(3*60)+60, 150+60+60,1, graph2d, "");
+	    drawSpots(sizeWidth/2 +(3*unitGrid), 150+unitGrid, 1, graph2d, "");
+	    drawSpots(sizeWidth/2 +(3*unitGrid)+unitGrid, 150+unitGrid, 1, graph2d, "");
+	    drawSpots(sizeWidth/2 +(3*unitGrid), 150+unitGrid+unitGrid, 1, graph2d, "");
+	    drawSpots(sizeWidth/2 +(3*unitGrid)+unitGrid, 150+unitGrid+unitGrid,1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_YELLOW);
-	    drawSpots(sizeWidth/2+(3*60), sizeHeight/2 +(3*60), 1, graph2d, "");
-	    drawSpots(sizeWidth/2+(3*60)+60, sizeHeight/2 +(3*60), 1, graph2d, "");
-	    drawSpots(sizeWidth/2+(3*60), sizeHeight/2 +(3*60)+60, 1, graph2d, "");
-	    drawSpots(sizeWidth/2+(3*60)+60, sizeHeight/2 +(3*60)+60, 1, graph2d, "");
+	    drawSpots(sizeWidth/2+(3*unitGrid), sizeHeight/2 +(3*unitGrid), 1, graph2d, "");
+	    drawSpots(sizeWidth/2+(3*unitGrid)+unitGrid, sizeHeight/2 +(3*unitGrid), 1, graph2d, "");
+	    drawSpots(sizeWidth/2+(3*unitGrid), sizeHeight/2 +(3*unitGrid)+unitGrid, 1, graph2d, "");
+	    drawSpots(sizeWidth/2+(3*unitGrid)+unitGrid, sizeHeight/2 +(3*unitGrid)+unitGrid, 1, graph2d, "");
+	    
+	    
+	    drawGrid(graph2d);
 	}
 	
 	private void drawSpots(int startX, int startY, int number, Graphics2D graph2d, String orientation){
@@ -157,20 +161,42 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 			horz=0;
 		}
 		for(int i=0; i<number;i++){
-			graph2d.fillOval(startX-20+(i*60*horz), startY-20+(i*60*vert), jumpSpotWidth,jumpSpotHeight);
+			graph2d.fillOval(startX-20+(i*unitGrid*horz), startY-20+(i*unitGrid*vert), jumpSpotWidth,jumpSpotHeight);
 		}
 	}
 	
 	private void drawGrid(Graphics graph2d){
 		//Drawing guide grids
-	    //Vertical grids
-	    
+	    //Vertical grids. Sweep across from left to right
+		char horzChar = 'j'; //offset to 10 chars ahead because the counter starts from -10
 	    for(int i=-10; i <10;i++){
-	    	graph2d.drawLine(sizeWidth/2 +(60*i), 0, sizeWidth/2+(60*i), sizeHeight); //vert center
+	    	int ascVal = (int) horzChar+i;
+	    	graph2d.drawLine(sizeWidth/2 +(unitGrid*i), 0, sizeWidth/2+(unitGrid*i), sizeHeight);
+	    	graph2d.setColor(Color.black);
 	    }
-	    //Horizontal grids
+	    //Horizontal grids. Sweep from top to bottom
 	    for(int i=-10; i <10;i++){
-			graph2d.drawLine(0, sizeHeight/2+(i*60), sizeWidth, sizeHeight/2+(i*60)); //horizontal center
+	    	
+			graph2d.drawLine(0, sizeHeight/2+(i*unitGrid), sizeWidth, sizeHeight/2+(i*unitGrid)); 
+	    	graph2d.setColor(Color.black);
+	    }
+	    
+	    //Putting up the labels on the grid
+	    ((Graphics2D) graph2d).setRenderingHint(
+	            RenderingHints.KEY_TEXT_ANTIALIASING,
+	            RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+	    graph2d.setColor(Color.magenta);
+	    for(int i = -10;i<10;i++){
+	    	//columns
+	    	for(int j=-10;j<20;j++){
+	    		//rows
+	    		int ascVal = (int) horzChar+i;
+	    		
+	    		//placing character labels on the grid
+	    		graph2d.drawString(Character.toString((char)ascVal),sizeWidth/2 +(unitGrid*i)+5, (unitGrid*j)+unitGrid/2);
+	    		//placing number labels on the grid
+	    		graph2d.drawString(String.valueOf(i+10),unitGrid/2+(unitGrid*j)-10, sizeHeight/2+(i*unitGrid));
+	    	}
 	    }
 		
 	}

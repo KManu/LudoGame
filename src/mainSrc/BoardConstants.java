@@ -21,8 +21,11 @@ public interface BoardConstants {
 	public static final Dimension BOARD_SIZE = new Dimension(900, 900);
 	public static final Point BOARD_CENTER_POINT = new Point(BOARD_SIZE.width/2,BOARD_SIZE.height/2);
 	public static final Dimension BOARD_JUMPSPOT_SIZE = new Dimension(40,40);
-	public static final Dimension BOARD_BASE_SIZE = new Dimension(180,180); 
+	public static final Dimension BOARD_BASE_SIZE = new Dimension(180,180);
+	public static final int unitGrid = 60;
+	
 	//Points on the board
+	
 	
 	
 	//Die constants
