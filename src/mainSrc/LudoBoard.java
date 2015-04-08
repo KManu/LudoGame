@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class LudoBoard extends JFrame implements BoardConstants, MouseListener , KeyListener  {
 
@@ -16,6 +17,8 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	int jumpSpotWidth = BoardConstants.BOARD_JUMPSPOT_SIZE.width;
 	int jumpSpotHeight = BoardConstants.BOARD_JUMPSPOT_SIZE.height;
 	LudoDie ludoDie= new LudoDie();
+	Vector<String> mapKeys = new Vector<String>();
+	Vector<Point> mapVals = new Vector<Point>();
 	
 	//Points across the board
 	
@@ -29,7 +32,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(sizeWidth,sizeHeight);
 		getFrames()[0].setLocation(screenX/300,screenY/8);
-		setResizable(false);
+		setResizable(true);
 		
 		addKeyListener(this);
 		
@@ -168,9 +171,9 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	private void drawGrid(Graphics graph2d){
 		//Drawing guide grids
 	    //Vertical grids. Sweep across from left to right
-		char horzChar = 'j'; //offset to 10 chars ahead because the counter starts from -10
+		char horzChar = 'k'; //offset to 10 chars ahead because the counter starts from -10
 	    for(int i=-10; i <10;i++){
-	    	int ascVal = (int) horzChar+i;
+	    	
 	    	graph2d.drawLine(sizeWidth/2 +(unitGrid*i), 0, sizeWidth/2+(unitGrid*i), sizeHeight);
 	    	graph2d.setColor(Color.black);
 	    }
@@ -186,19 +189,30 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	            RenderingHints.KEY_TEXT_ANTIALIASING,
 	            RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
 	    graph2d.setColor(Color.magenta);
-	    for(int i = -10;i<10;i++){
+	    Point coordPoint = new Point();
+	    String key= new String();
+	    for(int i = -10;i<20;i++){
 	    	//columns
 	    	for(int j=-10;j<20;j++){
 	    		//rows
 	    		int ascVal = (int) horzChar+i;
 	    		
 	    		//placing character labels on the grid
-	    		graph2d.drawString(Character.toString((char)ascVal),sizeWidth/2 +(unitGrid*i)+5, (unitGrid*j)+unitGrid/2);
+	    		graph2d.drawString(Character.toString((char)ascVal),sizeWidth/2 +(unitGrid*i)-10, (unitGrid*j)+unitGrid/2); 
 	    		//placing number labels on the grid
-	    		graph2d.drawString(String.valueOf(i+10),unitGrid/2+(unitGrid*j)-10, sizeHeight/2+(i*unitGrid));
-	    	}
+	    		graph2d.drawString(String.valueOf(i+10),unitGrid/2+(unitGrid*j)+5, sizeHeight/2+(i*unitGrid)); 
+	    		
+	    		
+	    		//create points from the coordinates and then place those into the structures to hold the keys and values
+	    		 key = Character.toString((char)ascVal) +"-"+ String.valueOf(i+10);
+	    		 coordPoint = new Point(unitGrid/2+(unitGrid*j)-10, sizeHeight/2+(i*unitGrid));
+				 System.out.println(key+ " -> "+coordPoint.getX()+", "+coordPoint.getY());	  
+				 
+	    	}	  
 	    }
-		
+
+	    
+	    
 	}
 	
 	public static void main(String [] args){
