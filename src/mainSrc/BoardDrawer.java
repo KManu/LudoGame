@@ -1,79 +1,27 @@
 package mainSrc;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
 
-public class LudoBoard extends JFrame implements BoardConstants, MouseListener , KeyListener  {
-
-	private static final long serialVersionUID = 1L;
-
-	int screenX,screenY ;
-	public static int sizeWidth=BoardConstants.BOARD_SIZE.width;
+public class BoardDrawer extends LudoBoard {
+public static int sizeWidth=BoardConstants.BOARD_SIZE.width;
 	
 	public static int sizeHeight=BoardConstants.BOARD_SIZE.height;
 	int jumpSpotWidth = BoardConstants.BOARD_JUMPSPOT_SIZE.width;
 	int jumpSpotHeight = BoardConstants.BOARD_JUMPSPOT_SIZE.height;
-	LudoDie ludoDie= new LudoDie();
-	Vector<String> mapKeys = new Vector<String>();
-	Vector<Point> mapVals = new Vector<Point>();
-	Image yellowPiece, redPiece,bluePiece, greenPiece;
 	
-	//Points across the board
+	Graphics2D graph2d;
+	JFrame frame;
 	
-	public LudoBoard(){		
-		super("Super awesome Ludo game");
-		
-		
-		//Setting Jframe constants and basic init
-		screenX = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-		screenY = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(sizeWidth,sizeHeight);
-
-		getFrames()[0].setLocation(screenX/300,screenY/8);
-		setResizable(true);
-
-		getFrames()[0].setLocation(screenX/7,screenY/20);
-		setResizable(false);
-
-		
-		addKeyListener(this);
-		getRes();
-		
-		//Setting up panes
-		JPanel mainPane = new JPanel(new BorderLayout());
-		mainPane.setSize(new Dimension(getRootPane().getMaximumSize()));
-		mainPane.setBackground(new Color(61,61,61));
-		//Die settings
-		//ludoDie.setLoc(mainPane.getWidth()/2 -25, mainPane.getHeight()/2 -50);
-		mainPane.add(ludoDie);
-		validate();
-		repaint();
-		add(mainPane);
-		setContentPane(mainPane);
-		setVisible(true);
+	public BoardDrawer(Graphics2D graph2d,JFrame frame){
+		this.graph2d = graph2d;
+		this.frame = frame;
 	}
-	
-	public void paint(Graphics graph){
-		super.paint(graph);
-		Graphics2D graph2d = (Graphics2D) graph;
-		RenderingHints rh = new RenderingHints(
-	             RenderingHints.KEY_ANTIALIASING,
-	             RenderingHints.VALUE_ANTIALIAS_ON);		
-	    graph2d.setRenderingHints(rh);
-		drawBoard(graph2d);
-		placePieces(graph2d);
-	    //drawGrid(graph2d);
-	}
-	
-	private void drawBoard(Graphics2D graph2d){
-		//Drawing paths
+	public void paint(){
+		frame.paint(graph2d);
+		
+	    //Drawing paths
 	    graph2d.setStroke(new BasicStroke(3));
 	    graph2d.setColor(Color.WHITE);
 	    graph2d.drawLine(sizeWidth/2, 150, sizeWidth/2, sizeHeight/2 -unitGrid); // top center vert path
@@ -180,179 +128,4 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 			graph2d.fillOval(startX-20+(i*unitGrid*horz), startY-20+(i*unitGrid*vert), jumpSpotWidth,jumpSpotHeight);
 		}
 	}
-	
-	private void drawGrid(Graphics graph2d){
-		//Drawing guide grids
-	    //Vertical grids. Sweep across from left to right
-		char horzChar = 'j'; //offset to 10 chars ahead because the counter starts from -10
-	    for(int i=-10; i <10;i++){
-	    	
-	    	graph2d.drawLine(sizeWidth/2 +(unitGrid*i), 0, sizeWidth/2+(unitGrid*i), sizeHeight);
-	    	graph2d.setColor(Color.black);
-	    }
-	    //Horizontal grids. Sweep from top to bottom
-	    for(int i=-10; i <10;i++){
-	    	
-			graph2d.drawLine(0, sizeHeight/2+(i*unitGrid), sizeWidth, sizeHeight/2+(i*unitGrid)); 
-	    	graph2d.setColor(Color.black);
-	    }
-	    
-	    //Putting up the labels on the grid
-	    ((Graphics2D) graph2d).setRenderingHint(
-	            RenderingHints.KEY_TEXT_ANTIALIASING,
-	            RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
-	    graph2d.setColor(Color.magenta);
-	    Point coordPoint = new Point();
-	    String key= new String();
-	    for(int i = -10;i<10;i++){
-	    	//columns
-	    	System.out.println("Outer loop");
-	    	for(int j=-10;j<20;j++){
-	    		System.out.println("Inner loop");
-	    		//rows
-	    		int ascVal = (int) horzChar+i;
-	    		//create points from the coordinates and then place those into the structures to hold the keys and values
-	    		 key = Character.toString((char)ascVal) +"-"+ String.valueOf(i+10);
-	    		 coordPoint = new Point(unitGrid/2+(unitGrid*j)-10, sizeHeight/2+(i*unitGrid));
-				 System.out.println(key+ " -> "+coordPoint.getX()+", "+coordPoint.getY());	  
-	    		
-	    		//placing character labels on the grid
-	    		//graph2d.drawString(Character.toString((char)ascVal),sizeWidth/2 +(unitGrid*i)-10, (unitGrid*j)+unitGrid/2); 
-	    		graph2d.drawString("("+(int)coordPoint.getX()+","+(int)coordPoint.getY()+")",sizeWidth/2 +(unitGrid*i)-15, (unitGrid*j)+unitGrid/2);
-	    		//placing number labels on the grid
-	    		//graph2d.drawString(String.valueOf(i+10),unitGrid/2+(unitGrid*j)+5, sizeHeight/2+(i*unitGrid)); 
-	    		
-	    		
-	    		
-				 
-	    	}	  
-	    }
-
-	    
-	    
-	}
-	
-	private void placePieces(Graphics2D graph2d){
-		
-/*
- * Blue base
-620,210
-620,270
-680,210
-680,270
-Yellow base
-620,630
-620,690
-680,630,
-680,690
-Red Base
-200,210
-200,270
-260,210
-260,270
-Green Base
-200,630
-200,690
-260,630
-260,690
- */
-		//Blue pieces
-		graph2d.drawImage(greenPiece,620-3,210-45,this);
-		graph2d.drawImage(greenPiece,620-3,270-45,this);
-		graph2d.drawImage(greenPiece,680-3,210-45,this);
-		graph2d.drawImage(greenPiece,680-3,270-45,this);
-		//Red Pieces
-		graph2d.drawImage(redPiece,200-3,210-45,this);
-		graph2d.drawImage(redPiece,200-3,270-45,this);
-		graph2d.drawImage(redPiece,260-3,210-45,this);
-		graph2d.drawImage(redPiece,260-3,270-45,this);
-		//yellow pieces
-		graph2d.drawImage(yellowPiece,620-3,630-45,this);
-		graph2d.drawImage(yellowPiece,620-3,690-45,this);
-		graph2d.drawImage(yellowPiece,680-3,630-45,this);
-		graph2d.drawImage(yellowPiece,680-3,690-45,this);
-		//green pieces
-		graph2d.drawImage(bluePiece,200-3,630-45,this);
-		graph2d.drawImage(bluePiece,200-3,690-45,this);
-		graph2d.drawImage(bluePiece,260-3,630-45,this);
-		graph2d.drawImage(bluePiece,260-3,690-45,this);
-	}
-	
-	private void getRes(){
-		try{
-			yellowPiece = ImageIO.read(new File(".//res/gamePieces/yellowPiece.png"));
-			redPiece = ImageIO.read(new File(".//res/gamePieces/redPiece.png"));
-			bluePiece = ImageIO.read(new File(".//res/gamePieces/bluePiece.png"));
-			greenPiece = ImageIO.read(new File(".//res/gamePieces/greenPiece.png"));
-		}
-		catch(IOException r){
-			System.out.println("Image file not found. Check to see it's in the res folder");
-		}
-	}
-	
-	public static void main(String [] args){
-		@SuppressWarnings("unused")
-		LudoBoard test = new LudoBoard();
-	}
-	
-	//LISTENERS
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		/** TODO 
-		 * Set up actions on button clicks 
-		 * SPACEBAR - Roll die 
-		 */
-		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
-			//repaint();
-			ludoDie.roll();
-			//drawGrid(getGraphics());
-			
-		}
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-
 }

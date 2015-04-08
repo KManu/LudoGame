@@ -42,7 +42,7 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 	}
 	
 	
-	public void paintComponent(Graphics graph){
+	protected void paintComponent(Graphics graph){
 		super.paintComponent(graph);
 		Graphics2D graph2d = (Graphics2D) graph;
 		
@@ -155,6 +155,7 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 			randVal1 = 1+randGen.nextInt(6);
 			randVal2 = 1+randGen.nextInt(6);
 			repaint(X1, Y1, dieCubeWidth, dieCubeHeight);
+			//repaint();
 			int []retVal = {randVal1,randVal2};
 			return(retVal);
 		

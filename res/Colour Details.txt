@@ -1,0 +1,38 @@
+Piece Colour RGB Values
+=======================
+RED
+===
+243
+5
+44
+
+GREEN
+=====
+16
+243
+5
+
+BLUE
+====
+5
+184
+243
+
+YELLOW
+======
+255
+228
+0
+
+Active Player Halo
+==================
+255
+255
+255
+0.6
+
+radius of this cirlcle is 3 times that of the home circle
+
+236
+0
+140

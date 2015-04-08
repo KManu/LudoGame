@@ -12,13 +12,13 @@ import java.awt.*;
 
 public interface BoardConstants {
 	//Game constants
-	public static final Color LUDO_RED = new Color(237,28, 36);
-	public static final Color LUDO_YELLOW = new Color(248,230,7);
-	public static final Color LUDO_BLUE = new Color(0,128,255);
-	public static final Color LUDO_GREEN = new Color(0,240,0);
+	public static final Color LUDO_RED = new Color(237,5, 44);
+	public static final Color LUDO_YELLOW = new Color(255,228,0);
+	public static final Color LUDO_BLUE = new Color(5,184,243);
+	public static final Color LUDO_GREEN = new Color(16,243,5);
 	
 	//Board constants
-	public static final Dimension BOARD_SIZE = new Dimension(900, 700);
+	public static final Dimension BOARD_SIZE = new Dimension(900, 900);
 	public static final Point BOARD_CENTER_POINT = new Point(BOARD_SIZE.width/2,BOARD_SIZE.height/2);
 	public static final Dimension BOARD_JUMPSPOT_SIZE = new Dimension(40,40);
 	public static final Dimension BOARD_BASE_SIZE = new Dimension(180,180);
