@@ -28,7 +28,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		screenY = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(sizeWidth,sizeHeight);
-		getFrames()[0].setLocation(screenX/300,screenY/8);
+		getFrames()[0].setLocation(screenX/7,screenY/20);
 		setResizable(false);
 		
 		addKeyListener(this);
