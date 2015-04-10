@@ -50,9 +50,7 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 	             RenderingHints.KEY_ANTIALIASING,
 	             RenderingHints.VALUE_ANTIALIAS_ON);
 	    graph2d.setRenderingHints(rh);		
-	    //Coloring back
-	   
-	    
+
 		drawDie(graph2d, randVal1,X1, Y1);
 	}
 	
@@ -154,8 +152,7 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 			Random randGen = new Random();
 			randVal1 = 1+randGen.nextInt(6);
 			randVal2 = 1+randGen.nextInt(6);
-			repaint(X1, Y1, dieCubeWidth, dieCubeHeight);
-			//repaint();
+			update(getGraphics());
 			int []retVal = {randVal1,randVal2};
 			return(retVal);
 		

@@ -1,3 +1,7 @@
+/*
+ * JComponent that essentially draws the Board. 
+ * That is, the spots, paths, and bases
+ */
 package mainSrc;
 
 import javax.imageio.ImageIO;
@@ -15,7 +19,6 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 
 	int screenX,screenY ;
 	public static int sizeWidth=BoardConstants.BOARD_SIZE.width;
-	
 	public static int sizeHeight=BoardConstants.BOARD_SIZE.height;
 	int jumpSpotWidth = BoardConstants.BOARD_JUMPSPOT_SIZE.width;
 	int jumpSpotHeight = BoardConstants.BOARD_JUMPSPOT_SIZE.height;
@@ -23,10 +26,12 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	Vector<String> mapKeys = new Vector<String>();
 	Vector<Point> mapVals = new Vector<Point>();
 	Image yellowPiece, redPiece,bluePiece, greenPiece;
+	GamePiece testPiece;
 	
 	//Points across the board
 	
 	public LudoBoard(){		
+		
 		super("Super awesome Ludo game");
 		
 		
@@ -44,20 +49,20 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 
 		
 		addKeyListener(this);
-		getRes();
 		
+		getRes();
 		//Setting up panes
 		JPanel mainPane = new JPanel(new BorderLayout());
 		mainPane.setSize(new Dimension(getRootPane().getMaximumSize()));
 		mainPane.setBackground(new Color(61,61,61));
 		//Die settings
 		//ludoDie.setLoc(mainPane.getWidth()/2 -25, mainPane.getHeight()/2 -50);
+
 		mainPane.add(ludoDie);
-		validate();
-		repaint();
 		add(mainPane);
 		setContentPane(mainPane);
 		setVisible(true);
+		
 	}
 	
 	public void paint(Graphics graph){
@@ -256,6 +261,8 @@ Green Base
 260,630
 260,690
  */
+		 testPiece = new GamePiece("red", new Point(500,400), graph2d,this);
+		getContentPane().add(testPiece);
 		//Blue pieces
 		graph2d.drawImage(greenPiece,620-3,210-45,this);
 		graph2d.drawImage(greenPiece,620-3,270-45,this);
@@ -335,7 +342,10 @@ Green Base
 		 */
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
 			//repaint();
-			ludoDie.roll();
+			//ludoDie.roll();
+			testPiece.setVisible(false);
+			testPiece.setLocation(new Point(550,400));
+			
 			//drawGrid(getGraphics());
 			
 		}
