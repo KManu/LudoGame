@@ -18,7 +18,7 @@ public class GamePiece extends JComponent implements BoardConstants{
 	/**
 	 * 
 	 */
-	
+	//TODO: Find a way to make the piece move. A single step, in a direction. Can be chained.
 	String type;
 	Image  pieceImage;
 	Graphics2D graph;
