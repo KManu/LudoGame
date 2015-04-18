@@ -19,7 +19,7 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 	int X1 = BoardConstants.DIE_DRAW_START.x;
 	int Y1 = BoardConstants.DIE_DRAW_START.y;
 	//Just starting values the die would have when initialized
-	int randVal1 = 6 ;
+	int randVal1 = 1 ;
 	int randVal2 = 5;
 	//x and Y values for the size of the die
 	int dieCubeWidth=BoardConstants.DIE_SIZE.width;
@@ -165,12 +165,12 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 			int frames =1;
 			@Override
 			public void actionPerformed(ActionEvent arg0) {		
-				randVal1= initAnim()[0];			
-				frames++;
 				if(frames == 10){
 					animTimer.stop();
 					animTimer= null;		
 				}
+				frames++;
+				randVal1= initAnim()[0];	
 			}
 		});
 		animTimer.start();

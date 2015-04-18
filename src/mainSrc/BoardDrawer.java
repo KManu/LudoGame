@@ -24,58 +24,58 @@ public static int sizeWidth=BoardConstants.BOARD_SIZE.width;
 	    //Drawing paths
 	    graph2d.setStroke(new BasicStroke(3));
 	    graph2d.setColor(Color.WHITE);
-	    graph2d.drawLine(sizeWidth/2, 150, sizeWidth/2, sizeHeight/2 -unitGrid); // top center vert path
-	    graph2d.drawLine(sizeWidth/2, 150+(6*unitGrid), sizeWidth/2, sizeHeight/2 -unitGrid+(6*unitGrid)); //bottom center vert path
-	    graph2d.drawLine(150, sizeHeight/2, 150+(4*unitGrid), sizeHeight/2); // left center horz path
-	    graph2d.drawLine(150+(6*unitGrid), sizeHeight/2, 150+(4*unitGrid)+(6*unitGrid), sizeHeight/2); // right center horz path
-	    graph2d.drawLine(sizeWidth/2-unitGrid,150, sizeHeight/2 +unitGrid, 150); // top horz path
-	    graph2d.drawLine(sizeWidth/2-unitGrid,150+(10*unitGrid), sizeWidth/2 +unitGrid, 150+(10*unitGrid)); //bottom horz path
-	    graph2d.drawLine(150, sizeHeight/2-unitGrid, 150, sizeHeight/2 +unitGrid); // left vert path
-	    graph2d.drawLine(150+(10*unitGrid), sizeHeight/2-unitGrid, 150+(10*unitGrid), sizeHeight/2 +unitGrid); 
-	    graph2d.drawLine(sizeWidth/2-unitGrid, 150, sizeWidth/2-unitGrid,sizeHeight/2 -unitGrid); //top left vert path
-	    graph2d.drawLine(sizeWidth/2+unitGrid, 150, sizeWidth/2+unitGrid,sizeHeight/2 -unitGrid);  // top right vert path
-	    graph2d.drawLine(sizeWidth/2-unitGrid, 150+(6*unitGrid), sizeWidth/2-unitGrid,sizeHeight/2 -unitGrid +(6*unitGrid)); //bottom left vert path
-	    graph2d.drawLine(sizeWidth/2+unitGrid, 150+(6*unitGrid), sizeWidth/2+unitGrid,sizeHeight/2 -unitGrid+(6*unitGrid));  // bottom right vert path
-	    graph2d.drawLine(150,sizeHeight/2-unitGrid, sizeWidth/2-unitGrid, sizeHeight/2-unitGrid); //left top horz path
-	    graph2d.drawLine(150,sizeHeight/2-unitGrid+(2*unitGrid), sizeWidth/2-unitGrid, sizeHeight/2-unitGrid+(2*unitGrid));  // left bottom horz path
-	    graph2d.drawLine(150+(6*unitGrid),sizeHeight/2-unitGrid, sizeWidth/2-unitGrid+(6*unitGrid), sizeHeight/2-unitGrid); //right top horz path
-	    graph2d.drawLine(150+(6*unitGrid),sizeHeight/2-unitGrid+(2*unitGrid), sizeWidth/2-unitGrid+(6*unitGrid), sizeHeight/2-unitGrid+(2*unitGrid));  // right bottom horz path 
+	    graph2d.drawLine(sizeWidth/2, 150, sizeWidth/2, sizeHeight/2 -UNITGRID); // top center vert path
+	    graph2d.drawLine(sizeWidth/2, 150+(6*UNITGRID), sizeWidth/2, sizeHeight/2 -UNITGRID+(6*UNITGRID)); //bottom center vert path
+	    graph2d.drawLine(150, sizeHeight/2, 150+(4*UNITGRID), sizeHeight/2); // left center horz path
+	    graph2d.drawLine(150+(6*UNITGRID), sizeHeight/2, 150+(4*UNITGRID)+(6*UNITGRID), sizeHeight/2); // right center horz path
+	    graph2d.drawLine(sizeWidth/2-UNITGRID,150, sizeHeight/2 +UNITGRID, 150); // top horz path
+	    graph2d.drawLine(sizeWidth/2-UNITGRID,150+(10*UNITGRID), sizeWidth/2 +UNITGRID, 150+(10*UNITGRID)); //bottom horz path
+	    graph2d.drawLine(150, sizeHeight/2-UNITGRID, 150, sizeHeight/2 +UNITGRID); // left vert path
+	    graph2d.drawLine(150+(10*UNITGRID), sizeHeight/2-UNITGRID, 150+(10*UNITGRID), sizeHeight/2 +UNITGRID); 
+	    graph2d.drawLine(sizeWidth/2-UNITGRID, 150, sizeWidth/2-UNITGRID,sizeHeight/2 -UNITGRID); //top left vert path
+	    graph2d.drawLine(sizeWidth/2+UNITGRID, 150, sizeWidth/2+UNITGRID,sizeHeight/2 -UNITGRID);  // top right vert path
+	    graph2d.drawLine(sizeWidth/2-UNITGRID, 150+(6*UNITGRID), sizeWidth/2-UNITGRID,sizeHeight/2 -UNITGRID +(6*UNITGRID)); //bottom left vert path
+	    graph2d.drawLine(sizeWidth/2+UNITGRID, 150+(6*UNITGRID), sizeWidth/2+UNITGRID,sizeHeight/2 -UNITGRID+(6*UNITGRID));  // bottom right vert path
+	    graph2d.drawLine(150,sizeHeight/2-UNITGRID, sizeWidth/2-UNITGRID, sizeHeight/2-UNITGRID); //left top horz path
+	    graph2d.drawLine(150,sizeHeight/2-UNITGRID+(2*UNITGRID), sizeWidth/2-UNITGRID, sizeHeight/2-UNITGRID+(2*UNITGRID));  // left bottom horz path
+	    graph2d.drawLine(150+(6*UNITGRID),sizeHeight/2-UNITGRID, sizeWidth/2-UNITGRID+(6*UNITGRID), sizeHeight/2-UNITGRID); //right top horz path
+	    graph2d.drawLine(150+(6*UNITGRID),sizeHeight/2-UNITGRID+(2*UNITGRID), sizeWidth/2-UNITGRID+(6*UNITGRID), sizeHeight/2-UNITGRID+(2*UNITGRID));  // right bottom horz path 
 	    graph2d.setStroke(new BasicStroke(1));
 	    
 	    
 		//drawing jump spots
 	    drawSpots(sizeWidth/2, 150, 5, graph2d, "Vertical"); // top center jump spots
-	    drawSpots(sizeWidth/2-unitGrid, 150, 5, graph2d, "Vertical"); // top left jump spots
-	    drawSpots(sizeWidth/2+unitGrid,150,5,graph2d,"Vertical"); //top right jump spots
+	    drawSpots(sizeWidth/2-UNITGRID, 150, 5, graph2d, "Vertical"); // top left jump spots
+	    drawSpots(sizeWidth/2+UNITGRID,150,5,graph2d,"Vertical"); //top right jump spots
 	    
-	    drawSpots(sizeWidth/2, 150+(6*unitGrid), 5, graph2d, "Vertical"); // bottom center jump spots
-	    drawSpots(sizeWidth/2-unitGrid, 150+(6*unitGrid), 5, graph2d, "Vertical"); // bottom left jump spots
-	    drawSpots(sizeWidth/2+unitGrid,150+(6*unitGrid),5,graph2d,"Vertical"); //bottom right jump spots
+	    drawSpots(sizeWidth/2, 150+(6*UNITGRID), 5, graph2d, "Vertical"); // bottom center jump spots
+	    drawSpots(sizeWidth/2-UNITGRID, 150+(6*UNITGRID), 5, graph2d, "Vertical"); // bottom left jump spots
+	    drawSpots(sizeWidth/2+UNITGRID,150+(6*UNITGRID),5,graph2d,"Vertical"); //bottom right jump spots
 	    
 	    drawSpots(150, sizeHeight/2, 5, graph2d, "Horizontal"); // left center jump spots
-	    drawSpots(150, sizeHeight/2-unitGrid, 5, graph2d, "Horizontal"); // left top jump spots
-	    drawSpots(150, sizeHeight/2+unitGrid, 5, graph2d, "Horizontal"); //left bottom jump spots
+	    drawSpots(150, sizeHeight/2-UNITGRID, 5, graph2d, "Horizontal"); // left top jump spots
+	    drawSpots(150, sizeHeight/2+UNITGRID, 5, graph2d, "Horizontal"); //left bottom jump spots
 	    
-	    drawSpots(150+(6*unitGrid), sizeHeight/2, 5, graph2d, "Horizontal"); // right center jump spots
-	    drawSpots(150+(6*unitGrid), sizeHeight/2-unitGrid, 5, graph2d, "Horizontal"); // right top jump spots
-	    drawSpots(150+(6*unitGrid), sizeHeight/2+unitGrid, 5, graph2d, "Horizontal"); //right bottom jump spots
+	    drawSpots(150+(6*UNITGRID), sizeHeight/2, 5, graph2d, "Horizontal"); // right center jump spots
+	    drawSpots(150+(6*UNITGRID), sizeHeight/2-UNITGRID, 5, graph2d, "Horizontal"); // right top jump spots
+	    drawSpots(150+(6*UNITGRID), sizeHeight/2+UNITGRID, 5, graph2d, "Horizontal"); //right bottom jump spots
 	    
 	    //redrawing colored jump spots
 	    graph2d.setColor(LUDO_GREEN);
-	    drawSpots(sizeWidth/2, 150+unitGrid, 4, graph2d, "Vertical"); // top center colored jump spots
-	    drawSpots(sizeWidth/2+unitGrid, 150, 1, graph2d, "");
+	    drawSpots(sizeWidth/2, 150+UNITGRID, 4, graph2d, "Vertical"); // top center colored jump spots
+	    drawSpots(sizeWidth/2+UNITGRID, 150, 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_YELLOW);
-	    drawSpots(150+(6*unitGrid), sizeHeight/2, 4, graph2d, "Horizontal"); // right center colored jump spots
-	    drawSpots(sizeWidth/2-unitGrid+(6*unitGrid), sizeHeight/2-unitGrid+(2*unitGrid), 1, graph2d, "");
+	    drawSpots(150+(6*UNITGRID), sizeHeight/2, 4, graph2d, "Horizontal"); // right center colored jump spots
+	    drawSpots(sizeWidth/2-UNITGRID+(6*UNITGRID), sizeHeight/2-UNITGRID+(2*UNITGRID), 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_BLUE);
-	    drawSpots(sizeWidth/2, 150+(6*unitGrid), 4, graph2d, "Vertical"); // bottom center colored jump spots
-	    drawSpots(sizeWidth/2-unitGrid,150+(10*unitGrid), 1, graph2d, "");
+	    drawSpots(sizeWidth/2, 150+(6*UNITGRID), 4, graph2d, "Vertical"); // bottom center colored jump spots
+	    drawSpots(sizeWidth/2-UNITGRID,150+(10*UNITGRID), 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_RED);
-	    drawSpots(150+unitGrid, sizeHeight/2, 4, graph2d, "Horizontal"); // left center jump spots
-	    drawSpots(150,sizeHeight/2-unitGrid,1, graph2d, "");
+	    drawSpots(150+UNITGRID, sizeHeight/2, 4, graph2d, "Horizontal"); // left center jump spots
+	    drawSpots(150,sizeHeight/2-UNITGRID,1, graph2d, "");
 	    
 	    //Draw bases
 	    graph2d.setStroke(new BasicStroke(3));
@@ -89,28 +89,28 @@ public static int sizeWidth=BoardConstants.BOARD_SIZE.width;
 	    
 	    //Drawing base spots
 	    graph2d.setColor(LUDO_RED);
-	    drawSpots(150+unitGrid, 150+unitGrid, 1, graph2d, "");
-	    drawSpots(150+unitGrid, 150+unitGrid+unitGrid, 1, graph2d, "");
-	    drawSpots(150+unitGrid+unitGrid, 150+unitGrid, 1, graph2d, "");
-	    drawSpots(150+unitGrid+unitGrid, 150+unitGrid+unitGrid, 1, graph2d, "");
+	    drawSpots(150+UNITGRID, 150+UNITGRID, 1, graph2d, "");
+	    drawSpots(150+UNITGRID, 150+UNITGRID+UNITGRID, 1, graph2d, "");
+	    drawSpots(150+UNITGRID+UNITGRID, 150+UNITGRID, 1, graph2d, "");
+	    drawSpots(150+UNITGRID+UNITGRID, 150+UNITGRID+UNITGRID, 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_BLUE);
-	    drawSpots(150+unitGrid, sizeHeight/2 +(3*unitGrid), 1, graph2d, "");
-	    drawSpots(150+unitGrid+unitGrid, sizeHeight/2 +(3*unitGrid), 1, graph2d, "");
-	    drawSpots(150+unitGrid, sizeHeight/2 +(3*unitGrid)+unitGrid, 1, graph2d, "");
-	    drawSpots(150+unitGrid+unitGrid, sizeHeight/2 +(3*unitGrid)+unitGrid, 1, graph2d, "");
+	    drawSpots(150+UNITGRID, sizeHeight/2 +(3*UNITGRID), 1, graph2d, "");
+	    drawSpots(150+UNITGRID+UNITGRID, sizeHeight/2 +(3*UNITGRID), 1, graph2d, "");
+	    drawSpots(150+UNITGRID, sizeHeight/2 +(3*UNITGRID)+UNITGRID, 1, graph2d, "");
+	    drawSpots(150+UNITGRID+UNITGRID, sizeHeight/2 +(3*UNITGRID)+UNITGRID, 1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_GREEN);
-	    drawSpots(sizeWidth/2 +(3*unitGrid), 150+unitGrid, 1, graph2d, "");
-	    drawSpots(sizeWidth/2 +(3*unitGrid)+unitGrid, 150+unitGrid, 1, graph2d, "");
-	    drawSpots(sizeWidth/2 +(3*unitGrid), 150+unitGrid+unitGrid, 1, graph2d, "");
-	    drawSpots(sizeWidth/2 +(3*unitGrid)+unitGrid, 150+unitGrid+unitGrid,1, graph2d, "");
+	    drawSpots(sizeWidth/2 +(3*UNITGRID), 150+UNITGRID, 1, graph2d, "");
+	    drawSpots(sizeWidth/2 +(3*UNITGRID)+UNITGRID, 150+UNITGRID, 1, graph2d, "");
+	    drawSpots(sizeWidth/2 +(3*UNITGRID), 150+UNITGRID+UNITGRID, 1, graph2d, "");
+	    drawSpots(sizeWidth/2 +(3*UNITGRID)+UNITGRID, 150+UNITGRID+UNITGRID,1, graph2d, "");
 	    
 	    graph2d.setColor(LUDO_YELLOW);
-	    drawSpots(sizeWidth/2+(3*unitGrid), sizeHeight/2 +(3*unitGrid), 1, graph2d, "");
-	    drawSpots(sizeWidth/2+(3*unitGrid)+unitGrid, sizeHeight/2 +(3*unitGrid), 1, graph2d, "");
-	    drawSpots(sizeWidth/2+(3*unitGrid), sizeHeight/2 +(3*unitGrid)+unitGrid, 1, graph2d, "");
-	    drawSpots(sizeWidth/2+(3*unitGrid)+unitGrid, sizeHeight/2 +(3*unitGrid)+unitGrid, 1, graph2d, "");
+	    drawSpots(sizeWidth/2+(3*UNITGRID), sizeHeight/2 +(3*UNITGRID), 1, graph2d, "");
+	    drawSpots(sizeWidth/2+(3*UNITGRID)+UNITGRID, sizeHeight/2 +(3*UNITGRID), 1, graph2d, "");
+	    drawSpots(sizeWidth/2+(3*UNITGRID), sizeHeight/2 +(3*UNITGRID)+UNITGRID, 1, graph2d, "");
+	    drawSpots(sizeWidth/2+(3*UNITGRID)+UNITGRID, sizeHeight/2 +(3*UNITGRID)+UNITGRID, 1, graph2d, "");
 	    
 	}
 	
@@ -125,7 +125,7 @@ public static int sizeWidth=BoardConstants.BOARD_SIZE.width;
 			horz=0;
 		}
 		for(int i=0; i<number;i++){
-			graph2d.fillOval(startX-20+(i*unitGrid*horz), startY-20+(i*unitGrid*vert), jumpSpotWidth,jumpSpotHeight);
+			graph2d.fillOval(startX-20+(i*UNITGRID*horz), startY-20+(i*UNITGRID*vert), jumpSpotWidth,jumpSpotHeight);
 		}
 	}
 }

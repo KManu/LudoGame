@@ -23,14 +23,19 @@ public class GamePiece extends JComponent implements BoardConstants{
 	Image  pieceImage;
 	Graphics2D graph;
 	ImageObserver callerObserver;
+	Point location;
+	String status;
 	private static final long serialVersionUID = 1L;
 	
-	public GamePiece(String type, Point location,Graphics2D graph2d, ImageObserver callerObs){
+	public GamePiece(String type,Graphics2D graph2d, Point location,ImageObserver callerObs){
 		this.type = type.toUpperCase();
 		this.callerObserver = callerObs;
-		getRes(type);
-		this.graph= graph2d;
-		placePiece(graph, location);
+		this.location = location;
+		this.graph = graph2d;
+		this.status = "";
+		getRes(this.type);
+		//placePiece(graph2d, location);
+		
 		
 	}
 	
@@ -42,7 +47,7 @@ public class GamePiece extends JComponent implements BoardConstants{
 	             RenderingHints.VALUE_ANTIALIAS_ON);		
 	    graph2d.setRenderingHints(rh);
 	    
-	    
+	   
 	}
 	
 	private void getRes(String type){
@@ -56,7 +61,7 @@ public class GamePiece extends JComponent implements BoardConstants{
 				System.out.println("Game Piece IO Error");
 			}
 		}
-		else if(type.contains("red")){
+		else if(type.contains("RED")){
 			try {
 				pieceImage = ImageIO.read(new File(".//res/gamePieces/redPiece.png"));
 			} catch (IOException e) {
@@ -83,13 +88,19 @@ public class GamePiece extends JComponent implements BoardConstants{
 	}
 	
 	public void placePiece(Graphics2D graph2d,Point location){
-		graph2d.drawImage(pieceImage,(int)location.getX()-3,(int)location.getY()-45,callerObserver);
+		if(location != this.location){
+			//graph2d.clearRect((int)this.location.getX(), (int)this.location.getY(), 30, 45);
+		}
 		
+		this.location = location;
+		this.graph = graph2d;
+		graph2d.drawImage(pieceImage,(int)this.location.getX()-3,(int)this.location.getY()-45,callerObserver);
+		//this.graph.drawString("Hello there", (int)location.getX(), (int)location.getY());
 	}
+
 	
-	public void movePiece(Point location){
-		graph.translate(location.getX(),location.getY());
-		update(graph);
+	public void movePiece(Point newLocation){
+		this.location = new Point((int)newLocation.getX()-10,(int)newLocation.getY()+10);
 	}
 	
 	
