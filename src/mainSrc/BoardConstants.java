@@ -52,14 +52,61 @@ public interface BoardConstants {
 				new Point(260,270)		
 		};
 		
-		//Initial jump spots. 
-		//ie, the spots where new pieces land as soon as they enter the game
-		Point BLUE_INIT_JUMPSPOT = new Point(390,740);
-		Point GREEN_INIT_JUMPSPOT = new Point(510,140);
-		Point YELLOW_INIT_JUMPSPOT = new Point(750,500);
-		Point RED_INIT_JUMPSPOT = new Point(150,380);
+		
 		
 		//Path around the board
+		 //List out all the jump spots on the board
+		 //in traversal order. Starting from the blue jump spot
+		Point [] BOARD_PATH_JUMPSPOTS={
+				new Point(390,740),//0
+				new Point(390,680),//1
+				new Point(390,620),//2
+				new Point(390,560),//3
+				new Point(390,500),//4
+				new Point(330,500),//5
+				new Point(270,500),//6
+				new Point(210,500),//7
+				new Point(150,500),//8
+				new Point(150,440),//9
+				new Point(150,380),//10
+				new Point(210,380),//11
+				new Point(270,380),//12
+				new Point(330,380),//13
+				new Point(390,380),//14
+				new Point(390,320),//15
+				new Point(390,260),//16
+				new Point(390,200),//17
+				new Point(390,140),//18
+				new Point(450,140),//19
+				new Point(510,140),//20
+				new Point(510,200),//21
+				new Point(510,260),//22
+				new Point(510,320),//23
+				new Point(510,380),//24
+				new Point(570,380),//25
+				new Point(630,380),//26
+				new Point(690,380),//27
+				new Point(750,380),//28
+				new Point(750,440),//29
+				new Point(750,500),//30
+				new Point(690,500),//31
+				new Point(630,500),//32
+				new Point(570,500),//33
+				new Point(510,500),//34
+				new Point(510,560),//35
+				new Point(510,620),//36
+				new Point(510,680),//37
+				new Point(510,740),//38
+				new Point(450,740)  //39
+		};
+		
+		//Initial jump spots. 
+			//ie, the spots where new pieces land as soon as they enter the game
+		Point BLUE_INIT_JUMPSPOT = BOARD_PATH_JUMPSPOTS[0];
+		Point RED_INIT_JUMPSPOT = BOARD_PATH_JUMPSPOTS[10]; //10
+		Point GREEN_INIT_JUMPSPOT = BOARD_PATH_JUMPSPOTS[20];//20
+		Point YELLOW_INIT_JUMPSPOT =BOARD_PATH_JUMPSPOTS[30];//30
+		
 		
 		//Win jump spots
 			//listed in order from outer to inner, 0->3

@@ -6,6 +6,7 @@ package mainSrc;
 
 
 import javax.swing.*;
+import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,6 +16,8 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 
 	private static final long serialVersionUID = 1L;
 
+	
+	int testIterator=0;
 	int screenX,screenY ;
 	public static int sizeWidth=BoardConstants.BOARD_SIZE.width;
 	public static int sizeHeight=BoardConstants.BOARD_SIZE.height;
@@ -32,7 +35,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	GamePiece [] yellowPieces= new GamePiece[4];
 	
 	int dieRollVal=0;
-	//Points across the board
+	Timer pieceAnimTimer=null;
 	
 	public LudoBoard(){		
 		
@@ -110,7 +113,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	    graph2d.setRenderingHints(rh);
 		drawBoard(graph2d);
 		placeBoardPieces(graph2d);
-	    //drawGrid(graph2d);
+	   // drawGrid(graph2d);
 	}
 	
 	private void drawBoard(Graphics2D graph2d){
@@ -301,11 +304,33 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	}
 	
 
+	
 	public static void main(String [] args){
 		@SuppressWarnings("unused")
 		LudoBoard test = new LudoBoard();
 	}
 	
+	
+	public void boardPieceTranslate(GamePiece piece,int steps){
+		//handles translating a piece along the board.
+		//uses a counter to move the piece one step at a time, the number of steps
+		
+		
+		pieceAnimTimer = new Timer(200,new ActionListener(){
+			int frames =1;
+			@Override
+			public void actionPerformed(ActionEvent arg0) {	
+					if(frames == steps){
+						pieceAnimTimer.stop();
+						pieceAnimTimer=null;
+					}
+					piece.movePiece();
+					update((Graphics2D)getGraphics());
+					frames++;
+			}
+		});
+		pieceAnimTimer.start();
+	}
 	//LISTENERS
 
 	@Override
@@ -345,33 +370,11 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		 * SPACEBAR - Roll die 
 		 */
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
-			
-			Random rand = new Random();
-			int randSel = rand.nextInt(4);
-			if(ludoDie.roll() ==6){
-				switch (randSel) {
-				case 1:
-					bluePieces[0].movePiece(BLUE_INIT_JUMPSPOT);
-					update((Graphics2D)getGraphics());
-					break;
-				case 2:
-					greenPieces[0].movePiece(GREEN_INIT_JUMPSPOT);
-					update((Graphics2D)getGraphics());
-					break;
-				case 3:
-					yellowPieces[0].movePiece(YELLOW_INIT_JUMPSPOT);
-					update((Graphics2D)getGraphics());
-					break;
-				case 4:
-					redPieces[0].movePiece(RED_INIT_JUMPSPOT);
-					update((Graphics2D)getGraphics());
-					break;
-				default:
-					break;
-				}
-			}
-			//bluePieces[0].movePiece(BLUE_INIT_JUMPSPOT);
-			update((Graphics2D)getGraphics());
+			dieRollVal =ludoDie.roll();
+			//bluePieces[1].movePiece(BOARD_PATH_JUMPSPOTS[testIterator]);
+			boardPieceTranslate(bluePieces[0],dieRollVal);
+			/*bluePieces[2].movePiece();
+			update((Graphics2D)getGraphics());*/
 		}
 		
 	}

@@ -161,7 +161,7 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 		if (animTimer !=null){
 			return 0;			
 		}
-		animTimer = new Timer(100,new ActionListener(){
+		animTimer = new Timer(10,new ActionListener(){
 			int frames =1;
 			@Override
 			public void actionPerformed(ActionEvent arg0) {		

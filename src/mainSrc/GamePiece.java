@@ -6,6 +6,7 @@
 package mainSrc;
 
 import javax.imageio.*;
+import javax.naming.Context;
 import javax.swing.*;
 
 import java.awt.*;
@@ -25,6 +26,7 @@ public class GamePiece extends JComponent implements BoardConstants{
 	ImageObserver callerObserver;
 	Point location;
 	String status;
+	int pathIndex;
 	private static final long serialVersionUID = 1L;
 	
 	public GamePiece(String type,Graphics2D graph2d, Point location,ImageObserver callerObs){
@@ -53,10 +55,11 @@ public class GamePiece extends JComponent implements BoardConstants{
 	private void getRes(String type){
 		
 		//Get and draw Image based on the type of the character you are creating
-		
+		// also, set the path index to the index of the color init jump spot
 		if(type.contains("YELLOW")){
 			try {
 				pieceImage = ImageIO.read(new File(".//res/gamePieces/yellowPiece.png"));
+				pathIndex =30; 
 			} catch (IOException e) {
 				System.out.println("Game Piece IO Error");
 			}
@@ -64,6 +67,7 @@ public class GamePiece extends JComponent implements BoardConstants{
 		else if(type.contains("RED")){
 			try {
 				pieceImage = ImageIO.read(new File(".//res/gamePieces/redPiece.png"));
+				pathIndex= 10;
 			} catch (IOException e) {
 			
 				System.out.println("Game Piece IO Error");
@@ -72,6 +76,7 @@ public class GamePiece extends JComponent implements BoardConstants{
 		else if(type.contains("BLUE")){
 			try {
 				pieceImage = ImageIO.read(new File(".//res/gamePieces/bluePiece.png"));
+				pathIndex = 0;
 			} catch (IOException e) {
 				
 				System.out.println("Game Piece IO Error");
@@ -80,6 +85,7 @@ public class GamePiece extends JComponent implements BoardConstants{
 		else if(type.contains("GREEN")){
 			try {
 				pieceImage = ImageIO.read(new File(".//res/gamePieces/greenPiece.png"));
+				pathIndex = 20;
 			} catch (IOException e) {
 				
 				System.out.println("Game Piece IO Error");
@@ -95,7 +101,7 @@ public class GamePiece extends JComponent implements BoardConstants{
 		this.location = location;
 		this.graph = graph2d;
 		graph2d.drawImage(pieceImage,(int)this.location.getX()-3,(int)this.location.getY()-45,callerObserver);
-		//this.graph.drawString("Hello there", (int)location.getX(), (int)location.getY());
+		
 	}
 
 	
@@ -103,7 +109,41 @@ public class GamePiece extends JComponent implements BoardConstants{
 		this.location = new Point((int)newLocation.getX()-10,(int)newLocation.getY()+10);
 	}
 	
-	
+	public void movePiece(){
+		//loop through the steps, increasing the path location by the step
+		
+			
+			if(pathIndex >39){
+				pathIndex=0;
+			}
+			//this.location = BOARD_PATH_JUMPSPOTS[pathIndex];
+			movePiece(BOARD_PATH_JUMPSPOTS[pathIndex]);
+			pathIndex++;
+		
+		
+	}
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
