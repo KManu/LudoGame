@@ -10,6 +10,7 @@ import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Ellipse2D;
 import java.util.*;
 
 public class LudoBoard extends JFrame implements BoardConstants, MouseListener , KeyListener  {
@@ -27,6 +28,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	Vector<String> mapKeys = new Vector<String>();
 	Vector<Point> mapVals = new Vector<Point>();
 	
+	//Players
+	Player [] players= new Player[4]; 
+	
+	
 	
 	//Game pieces
 	GamePiece [] bluePieces = new GamePiece[4];
@@ -36,7 +41,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	
 	int dieRollVal=0;
 	Timer pieceAnimTimer=null;
-	
+	int currentPlayerIndex=0;
 	public LudoBoard(){		
 		
 		super("Super awesome Ludo game");
@@ -68,6 +73,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 
 		
 		mainPane.add(ludoDie);
+		mainPane.addMouseListener(this);
 		add(mainPane);
 		setContentPane(mainPane);
 		setVisible(true);
@@ -77,31 +83,40 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	}
 	
 	private void initBoard(){
+		
+		//init the players
+		players[0]= new Player("blue");
+		players[1] = new Player("red");
+		players[2]= new Player("green");
+		players[3]= new Player("yellow");
+				
 		//Set the pieces to their initial board positions
 		//blue pieces
 		Graphics2D graph2d= (Graphics2D) getGraphics();
-		bluePieces[0]= new GamePiece("blue", graph2d, BLUE_BASE_JUMPSPOTS[0], this);
-		bluePieces[1]= new GamePiece("blue", graph2d, BLUE_BASE_JUMPSPOTS[1], this);
-		bluePieces[2]= new GamePiece("blue", graph2d, BLUE_BASE_JUMPSPOTS[2], this);
-		bluePieces[3]= new GamePiece("blue", graph2d, BLUE_BASE_JUMPSPOTS[3], this);
+		bluePieces[0]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[0], this);
+		bluePieces[1]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[1], this);
+		bluePieces[2]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[2], this);
+		bluePieces[3]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[3], this);
 		
 		//green pieces
-		greenPieces[0]= new GamePiece("green", graph2d, GREEN_BASE_JUMPSPOTS[0], this);
-		greenPieces[1]= new GamePiece("green", graph2d, GREEN_BASE_JUMPSPOTS[1], this);
-		greenPieces[2]= new GamePiece("green", graph2d, GREEN_BASE_JUMPSPOTS[2], this);
-		greenPieces[3]= new GamePiece("green", graph2d, GREEN_BASE_JUMPSPOTS[3], this);
+		greenPieces[0]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[0], this);
+		greenPieces[1]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[1], this);
+		greenPieces[2]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[2], this);
+		greenPieces[3]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[3], this);
 
 		//red pieces
-		redPieces[0]= new GamePiece("red", graph2d, RED_BASE_JUMPSPOTS[0], this);
-		redPieces[1]= new GamePiece("red", graph2d, RED_BASE_JUMPSPOTS[1], this);
-		redPieces[2]= new GamePiece("red", graph2d, RED_BASE_JUMPSPOTS[2], this);
-		redPieces[3]= new GamePiece("red", graph2d, RED_BASE_JUMPSPOTS[3], this);
+		redPieces[0]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[0], this);
+		redPieces[1]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[1], this);
+		redPieces[2]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[2], this);
+		redPieces[3]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[3], this);
 			
 		//yellow pieces
-		yellowPieces[0]= new GamePiece("yellow", graph2d, YELLOW_BASE_JUMPSPOTS[0], this);
-		yellowPieces[1]= new GamePiece("yellow", graph2d, YELLOW_BASE_JUMPSPOTS[1], this);
-		yellowPieces[2]= new GamePiece("yellow", graph2d, YELLOW_BASE_JUMPSPOTS[2], this);
-		yellowPieces[3]= new GamePiece("yellow", graph2d, YELLOW_BASE_JUMPSPOTS[3], this);
+		yellowPieces[0]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[0], this);
+		yellowPieces[1]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[1], this);
+		yellowPieces[2]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[2], this);
+		yellowPieces[3]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[3], this);
+		
+		
 	}
 	
 	public void paint(Graphics graph){
@@ -113,7 +128,9 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	    graph2d.setRenderingHints(rh);
 		drawBoard(graph2d);
 		placeBoardPieces(graph2d);
-	   // drawGrid(graph2d);
+		
+	    drawGrid(graph2d);
+	  
 	}
 	
 	private void drawBoard(Graphics2D graph2d){
@@ -314,28 +331,33 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	public void boardPieceTranslate(GamePiece piece,int steps){
 		//handles translating a piece along the board.
 		//uses a counter to move the piece one step at a time, the number of steps
-		
-		
-		pieceAnimTimer = new Timer(200,new ActionListener(){
+		piece.setStatus(PIECE_STATUS_ACTIVE);
+		if(pieceAnimTimer !=null){
+			return;
+		}
+		pieceAnimTimer = new Timer(500,new ActionListener(){
 			int frames =1;
 			@Override
 			public void actionPerformed(ActionEvent arg0) {	
-					if(frames == steps){
+					if(frames >= steps){
 						pieceAnimTimer.stop();
 						pieceAnimTimer=null;
+						piece.setStatus(PIECE_STATUS_WAITING);
 					}
 					piece.movePiece();
 					update((Graphics2D)getGraphics());
+					Graphics2D graph2d = (Graphics2D) getGraphics();
 					frames++;
 			}
 		});
 		pieceAnimTimer.start();
 	}
+	
 	//LISTENERS
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		drawGrid((Graphics2D)getGraphics());
 		
 	}
 
@@ -362,7 +384,50 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void selectNextPlayer(int selectedPiece){
+		if(currentPlayerIndex>=players.length-1){
+			currentPlayerIndex =0;
+		}
+		else{
+			currentPlayerIndex++;
+		}
+		//Select the next piece 
+		setPlayersWaiting();
+		players[currentPlayerIndex].setStatus(PLAYER_STATUS_ACTIVE);
+		players[currentPlayerIndex].chosePiece(players[currentPlayerIndex].activePieceIndex);
+	}
 
+	public GamePiece getGamePieces(){
+		for(Player player: players){
+			if(player.playerStatus.equals(PLAYER_STATUS_ACTIVE) && player.color.equals("BLUE")){
+				return bluePieces[player.activePieceIndex];
+			}
+			else if(player.playerStatus.equals(PLAYER_STATUS_ACTIVE )&& player.color.equals("GREEN")){
+				return greenPieces[player.activePieceIndex];			
+			}
+			else if(player.playerStatus.equals(PLAYER_STATUS_ACTIVE)&& player.color.equals("RED")){
+				return redPieces[player.activePieceIndex];
+			}
+			else if(player.playerStatus.equals(PLAYER_STATUS_ACTIVE)&& player.color.equals("YELLOW")){
+				return yellowPieces[player.activePieceIndex];
+			}
+			
+		}
+		return null;
+	}
+	
+	public void setPlayersWaiting(){
+		for(Player player : players){
+			if (player.playerStatus.equals(PLAYER_STATUS_LOST)|| player.playerStatus.equals(PLAYER_STATUS_WON)||player.playerStatus.equals(PLAYER_STATUS_WAITING)){
+				continue;
+			}
+			else {
+				player.setStatus(PLAYER_STATUS_WAITING);
+			}
+			
+		}
+	}
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		/** TODO 
@@ -370,13 +435,17 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		 * SPACEBAR - Roll die 
 		 */
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
-			dieRollVal =ludoDie.roll();
-			//bluePieces[1].movePiece(BOARD_PATH_JUMPSPOTS[testIterator]);
-			boardPieceTranslate(bluePieces[0],dieRollVal);
-			/*bluePieces[2].movePiece();
-			update((Graphics2D)getGraphics());*/
+			
+				dieRollVal =ludoDie.roll();
+				selectNextPlayer(dieRollVal%4);
+				
+				boardPieceTranslate(getGamePieces(),dieRollVal);
+			
+			
+			
+			
 		}
-		
+			
 	}
 
 	@Override
