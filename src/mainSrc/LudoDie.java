@@ -32,8 +32,8 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 	Timer animTimer ;
 	public LudoDie(){
 		setSize(dieCubeWidth,dieCubeHeight);
-		X1=LudoBoard.sizeWidth/2-27;
-		Y1 = LudoBoard.sizeHeight/2-53;
+		X1=LudoBoard.sizeWidth/2-32;
+		Y1 = LudoBoard.sizeHeight/2-80;
 		setVisible(true);
 		//setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(dieCubeWidth, dieCubeHeight));

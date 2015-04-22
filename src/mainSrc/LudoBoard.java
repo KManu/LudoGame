@@ -3,16 +3,19 @@
  * That is, the spots, paths, and bases
  */
 package mainSrc;
+import javazoom.jl.player.*;
 
-
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.*;
 
-public class LudoBoard extends JFrame implements BoardConstants, MouseListener , KeyListener  {
+public class LudoBoard extends JFrame implements BoardConstants, MouseListener , KeyListener, ActionListener  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +29,18 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	LudoDie ludoDie= new LudoDie();
 	Vector<String> mapKeys = new Vector<String>();
 	Vector<Point> mapVals = new Vector<Point>();
+	long songLength = 5000;
+	AudioPlayer gameMusic = new AudioPlayer();
 	
+	//menu elements
+	JMenu aboutMenu;
+	JMenu musicMenu;
+
+	// Create and add simple menu item to one of the drop down menu
+	JMenuItem nextSongAction;
+	JMenuItem previousSongAction;
+	JMenuItem playSongAction;
+	JMenuItem stopSongAction;
 	
 	//Game pieces
 	GamePiece [] bluePieces = new GamePiece[4];
@@ -37,10 +51,48 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	int dieRollVal=0;
 	Timer pieceAnimTimer=null;
 	
+	// audio player
+	//private AudioPlayer gameMusic;
+	
 	public LudoBoard(){		
 		
 		super("Super awesome Ludo game");
 		
+		//Menu Bar for Game
+
+		// Creates a menubar for a JFrame
+		JMenuBar menuBar = new JMenuBar();
+
+		// Add the menubar to the frame
+		setJMenuBar(menuBar);
+
+		// Define and add two drop down menu to the r
+		aboutMenu = new JMenu("About");
+		musicMenu = new JMenu("Music");
+		menuBar.add(aboutMenu);
+		menuBar.add(musicMenu);
+
+		// Create and add simple menu item to one of the drop down menu
+		nextSongAction = new JMenuItem("Next Song");
+		previousSongAction = new JMenuItem("Previous Song");
+		playSongAction = new JMenuItem("Play");
+		stopSongAction = new JMenuItem("Stop");
+
+		musicMenu.add(nextSongAction);
+		//musicMenu.add(previousSongAction);
+		musicMenu.add(playSongAction);
+		musicMenu.add(stopSongAction);
+		/*
+		nextSongAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("You have clicked on the new action");
+			}
+		});
+		*/
+		nextSongAction.addActionListener(this);
+		stopSongAction.addActionListener(this);
+		previousSongAction.addActionListener(this);
+		playSongAction.addActionListener(this);
 		
 		//Setting Jframe constants and basic init
 		screenX = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -52,9 +104,8 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		setResizable(true);
 
 		getFrames()[0].setLocation(screenX/7,screenY/20);
-		setResizable(false);
+		setResizable(true);
 
-		
 		addKeyListener(this);
 		
 		//init methods called here
@@ -65,14 +116,11 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		mainPane.setBackground(new Color(61,61,61));
 		//Die settings
 		//ludoDie.setLoc(mainPane.getWidth()/2 -25, mainPane.getHeight()/2 -50);
-
 		
 		mainPane.add(ludoDie);
 		add(mainPane);
 		setContentPane(mainPane);
-		setVisible(true);
-		
-		
+		setVisible(true);	
 		
 	}
 	
@@ -113,7 +161,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	    graph2d.setRenderingHints(rh);
 		drawBoard(graph2d);
 		placeBoardPieces(graph2d);
-	   // drawGrid(graph2d);
+	    //drawGrid(graph2d);
 	}
 	
 	private void drawBoard(Graphics2D graph2d){
@@ -390,6 +438,67 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public long playSound(String url) {
+	    try {
+	    	String file = "./res/audio/" + url;
+	    	
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(file).getAbsoluteFile());
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(audioInputStream);
+	        clip.start();
+	        /*
+	        AudioFormat format = audioInputStream.getFormat();
+	        long audioFileLength = file.length();
+	        int frameSize = format.getFrameSize();
+	        float frameRate = format.getFrameRate();
+	        long durationInSeconds = (long) (audioFileLength / (frameSize * frameRate));
+	        long durationInMilli = (durationInSeconds * 1000);
+	        
+	        songLength = durationInMilli;
+	        */
+	        
+	        songLength = clip.getMicrosecondLength()/1000;
+	        
+	    } catch(Exception ex) {
+	        System.out.println("Error with playing sound.");
+	        ex.printStackTrace();
+	    }
+	    
+	    return songLength;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		
+		if(source == nextSongAction)
+		{
+			gameMusic.nextSong();
+		}
+		
+		else if(source == stopSongAction)
+		{
+			gameMusic.stopSong();
+			//System.out.println("stop");
+		}
+		
+		/*
+		else if(source == previousSongAction)
+		{
+			//gameMusic.previousSong();
+			System.out.println("previous");
+		}
+		*/
+		
+		else if(source == playSongAction)
+		{
+			gameMusic.startSong();
+			System.out.println("play");
+		}
+		
+	}
+	
 	
 
 }
