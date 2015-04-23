@@ -14,7 +14,7 @@ public class AudioPlayer{
 	private int index;
 	private boolean isPlaying;
 	private final Object lockObj = new Object();
-	String[] songTitles = {"nr", "cowboy", "festival"};
+	String[] songTitles = {"nr", "jean", "afrola", "summer", "cowboy", "festival", "score", "jurassic", "lucky", "more", "bokoor", "redemption"};
 	private Thread soundThread;
 	boolean nextSonged = false;
 	//boolean previousSonged = false;
