@@ -11,12 +11,9 @@ import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.*;
-<<<<<<< HEAD
 import java.io.File;
 import java.io.FileInputStream;
-=======
 import java.awt.geom.Ellipse2D;
->>>>>>> origin/master
 import java.util.*;
 
 public class LudoBoard extends JFrame implements BoardConstants, MouseListener , KeyListener, ActionListener  {
@@ -36,7 +33,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	long songLength = 5000;
 	AudioPlayer gameMusic = new AudioPlayer();
 	
-<<<<<<< HEAD
+
 	//menu elements
 	JMenu aboutMenu;
 	JMenu musicMenu;
@@ -46,12 +43,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	JMenuItem previousSongAction;
 	JMenuItem playSongAction;
 	JMenuItem stopSongAction;
-=======
+
 	//Players
 	Player [] players= new Player[4]; 
-	
-	
->>>>>>> origin/master
+
 	
 	//Game pieces
 	GamePiece [] bluePieces = new GamePiece[4];
@@ -61,14 +56,8 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	
 	int dieRollVal=0;
 	Timer pieceAnimTimer=null;
-<<<<<<< HEAD
 	
-	// audio player
-	//private AudioPlayer gameMusic;
-	
-=======
 	int currentPlayerIndex=0;
->>>>>>> origin/master
 	public LudoBoard(){		
 		
 		super("Super awesome Ludo game");
@@ -186,13 +175,9 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	    graph2d.setRenderingHints(rh);
 		drawBoard(graph2d);
 		placeBoardPieces(graph2d);
-<<<<<<< HEAD
-	    //drawGrid(graph2d);
-=======
-		
-	    drawGrid(graph2d);
-	  
->>>>>>> origin/master
+	    
+		//drawGrid(graph2d);
+
 	}
 	
 	private void drawBoard(Graphics2D graph2d){
@@ -579,9 +564,5 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 			gameMusic.startSong();
 			System.out.println("play");
 		}
-		
 	}
-	
-	
-
 }
