@@ -111,24 +111,28 @@ public interface BoardConstants {
 		//Win jump spots
 			//listed in order from outer to inner, 0->3
 		Point [] BLUE_WIN_JUMPSPOTS ={
+			new Point(450,740),	
 			new Point(450,740),
 			new Point(450,620),
 			new Point(450,560),
 			new Point(450,500)
 		};
 		Point [] GREEN_WIN_JUMPSPOTS ={
+			new Point(450,140),	
 			new Point(450,200),
 			new Point(450,260),
 			new Point(450,320),
 			new Point(450,380)	
 		};
 		Point [] YELLOW_WIN_JUMPSPOTS ={
+			new Point(750,380),	
 			new Point(690,440),
 			new Point(630,440),
 			new Point(570,440),
 			new Point(510,440)
 		};
 		Point [] RED_WIN_JUMPSPOTS ={
+			new Point(150,440),	
 			new Point(210,440),
 			new Point(270,440),
 			new Point(330,440),
@@ -143,11 +147,13 @@ public interface BoardConstants {
 	
 	//Game status constants
 	String PIECE_STATUS_ACTIVE = "Active";
+	String PIECE_STATUS_WAITING = "Waiting";
 	String PIECE_STATUS_BASED ="Based";
 	String PIECE_STATUS_KICKED_OUT ="Dead";
 	String PIECE_STATUS_SAFE ="Ascended";
 	
 	String PLAYER_STATUS_ACTIVE= "Active";
+	String PLAYER_STATUS_WAITING ="Waiting";
 	String PLAYER_STATUS_WON="Won";
 	String PLAYER_STATUS_LOST="Defeated";
 
