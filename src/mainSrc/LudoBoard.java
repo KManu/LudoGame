@@ -3,6 +3,7 @@
  * That is, the spots, paths, and bases
  */
 package mainSrc;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -39,14 +40,16 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	AudioPlayer gameMusic = new AudioPlayer();
 
 	//menu elements
-	JMenu aboutMenu;
+	JMenu gameMenu;
 	JMenu musicMenu;
 
 	// Create and add simple menu item to one of the drop down menu
 	JMenuItem nextSongAction;
-	JMenuItem previousSongAction;
+//	JMenuItem previousSongAction;
 	JMenuItem playSongAction;
 	JMenuItem stopSongAction;
+	JMenuItem aboutAction;
+	JMenuItem helpAction;
 
 	//Players
 	Player [] players= new Player[4]; 
@@ -82,21 +85,28 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		setJMenuBar(menuBar);
 
 		// Define and add two drop down menu to the r
-		aboutMenu = new JMenu("About");
+		gameMenu = new JMenu("Game");
 		musicMenu = new JMenu("Music");
-		menuBar.add(aboutMenu);
+		menuBar.add(gameMenu);
 		menuBar.add(musicMenu);
 
 		// Create and add simple menu item to one of the drop down menu
 		nextSongAction = new JMenuItem("Next Song");
-		previousSongAction = new JMenuItem("Previous Song");
+	//	previousSongAction = new JMenuItem("Previous Song");
 		playSongAction = new JMenuItem("Play");
 		stopSongAction = new JMenuItem("Stop");
-
+		
+		helpAction = new JMenuItem("Help");
+		aboutAction = new JMenuItem("About");
+		
+		gameMenu.add(helpAction);
+		gameMenu.add(aboutAction);
+		
 		musicMenu.add(nextSongAction);
 		//musicMenu.add(previousSongAction);
 		musicMenu.add(playSongAction);
 		musicMenu.add(stopSongAction);
+		
 		/*
 		nextSongAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -106,8 +116,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		*/
 		nextSongAction.addActionListener(this);
 		stopSongAction.addActionListener(this);
-		previousSongAction.addActionListener(this);
+		//previousSongAction.addActionListener(this);
 		playSongAction.addActionListener(this);
+		helpAction.addActionListener(this);
+		aboutAction.addActionListener(this);
 		
 		//Setting Jframe constants and basic init
 		screenX = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -613,11 +625,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		 */
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
 			
-				//dieRollVal =ludoDie.roll();
-				dieRollVal =1;
+			dieRollVal =ludoDie.roll();
+			//	dieRollVal =1;
 				selectNextPlayer(dieRollVal%4);
 				boardPieceTranslate(getGamePieces(),dieRollVal);
-			
 			
 			
 			
@@ -637,34 +648,6 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		
 	}
 	
-	public long playSound(String url) {
-	    try {
-	    	String file = "./res/audio/" + url;
-	    	
-	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(file).getAbsoluteFile());
-	        Clip clip = AudioSystem.getClip();
-	        clip.open(audioInputStream);
-	        clip.start();
-	        /*
-	        AudioFormat format = audioInputStream.getFormat();
-	        long audioFileLength = file.length();
-	        int frameSize = format.getFrameSize();
-	        float frameRate = format.getFrameRate();
-	        long durationInSeconds = (long) (audioFileLength / (frameSize * frameRate));
-	        long durationInMilli = (durationInSeconds * 1000);
-	        
-	        songLength = durationInMilli;
-	        */
-	        
-	        songLength = clip.getMicrosecondLength()/1000;
-	        
-	    } catch(Exception ex) {
-	        System.out.println("Error with playing sound.");
-	        ex.printStackTrace();
-	    }
-	    
-	    return songLength;
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -692,7 +675,43 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		else if(source == playSongAction)
 		{
 			gameMusic.startSong();
-			System.out.println("play");
+			//System.out.println("play");
+		}
+		
+		else if(source == aboutAction)
+		{	
+			//System.out.println("about");
+			String aboutString = "Developers<br>"
+					+ "<hr>"
+					+ "Kwabena Manu<br>"
+					+ "Thomas K. Collins<br><br>"
+					+ "Supervisors<br>"
+					+ "<hr>"
+					+ "Dr. Isaac Nti<br>"
+					+ "Mr. Kwasi Adomako<br><br>";
+			JEditorPane aboutLabel = new JEditorPane();
+			aboutLabel.setContentType("text/html; charset=utf-8");
+			aboutLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+			aboutLabel.setEditable(false);
+			aboutLabel.setText(aboutString);
+			aboutLabel.setOpaque(false);
+			JOptionPane.showMessageDialog(null, aboutLabel,"About", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+		else if(source == helpAction)
+		{	
+			
+			//System.out.println("help");
+			String helpString = "Controls"
+					+ "<hr>"
+					+ "Spacebar: Roll Die";
+			JEditorPane helpLabel = new JEditorPane();
+			helpLabel.setContentType("text/html; charset=utf-8");
+			//helpLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+			helpLabel.setEditable(false);
+			helpLabel.setText(helpString);
+			helpLabel.setOpaque(false);
+			JOptionPane.showMessageDialog(null, helpLabel, "Help", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
