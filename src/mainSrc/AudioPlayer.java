@@ -17,8 +17,6 @@ public class AudioPlayer{
 	String[] songTitles = {"nr", "cowboy", "festival"};
 	private Thread soundThread;
 	boolean nextSonged = false;
-	boolean songStopped = false;
-	//boolean previousSonged = false;
 	
 	AudioInputStream audioInputStream;
     Clip clip;
@@ -99,28 +97,12 @@ public class AudioPlayer{
 	
 	public void stopSong()
 	{
-		synchronized (lockObj)
-		{
-			try
-			{
-				clip.stop();
-				lockObj.wait();
-			}
-			
-			catch(Exception e)
-			{
-				
-			}
-		}
+		clip.stop();
 	}
 	
 	public void startSong()
 	{
-		synchronized (lockObj) 
-		{	
-			clip.start();	
-			lockObj.notify();
-		}
+		clip.start();
 	}
 	
 	public void nextSong()
