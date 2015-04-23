@@ -17,6 +17,8 @@ public class AudioPlayer{
 	String[] songTitles = {"nr", "cowboy", "festival"};
 	private Thread soundThread;
 	boolean nextSonged = false;
+	//boolean previousSonged = false;
+
 	
 	AudioInputStream audioInputStream;
     Clip clip;
