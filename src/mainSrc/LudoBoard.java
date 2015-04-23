@@ -3,8 +3,6 @@
  * That is, the spots, paths, and bases
  */
 package mainSrc;
-import javazoom.jl.player.*;
-
 import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -67,10 +65,6 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 
 	// audio player
 	//private AudioPlayer gameMusic;
-	
-
-	int currentPlayerIndex=0;
-
 
 	
 	int currentPlayerIndex=0;
@@ -619,14 +613,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		 */
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
 			
-				//dieRollVal =ludoDie.roll();
-				dieRollVal =1;
+				dieRollVal =ludoDie.roll();
+				//dieRollVal =1;
 				selectNextPlayer(dieRollVal%4);
 				boardPieceTranslate(getGamePieces(),dieRollVal);
-			
-			
-			
-			
 		}
 			
 	}
