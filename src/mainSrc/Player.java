@@ -8,6 +8,7 @@ public class Player implements BoardConstants {
 	int activePieceIndex;
 	int currentLoseIndex=0;
 	GamePiece [] pieces;
+	int piecesOnBoard;
 	
 	public Player(String color){
 		setColor(color);
@@ -30,5 +31,6 @@ public class Player implements BoardConstants {
 	}
 	public void chosePiece(int pieceIndex ){
 		activePieceIndex = pieceIndex;
+		piecesOnBoard = piecesOnBoard+1;
 	}
 }

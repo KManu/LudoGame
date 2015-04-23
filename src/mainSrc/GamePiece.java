@@ -30,7 +30,6 @@ public class GamePiece extends JComponent implements BoardConstants{
 	Point location;
 	String status;
 	int pathIndex,winPathIndex;
-	Rectangle pieceBound;
 	Color pieceColor;
 	int pieceOffset ;
 	int round;
@@ -53,21 +52,17 @@ public class GamePiece extends JComponent implements BoardConstants{
 		round = 1;
 		//placePiece(graph2d, location);
 		//pieceHalo = new ActiveHalo(, (int)this.location.getY()-10, UNITGRID/2, UNITGRID/2, this.pieceColor);
-		pieceBound = new Rectangle((int)this.location.getX(),(int)this.location.getY(),UNITGRID/2,UNITGRID/2);
+		//pieceBound = new Rectangle((int)this.location.getX(),(int)this.location.getY(),UNITGRID/2,UNITGRID/2);
 		
 	}
 	
-	public void paintComponent(Graphics graph){
-		super.paintComponent(graph);
-		Graphics2D graph2d = (Graphics2D) graph;
-		RenderingHints rh = new RenderingHints(
-	             RenderingHints.KEY_ANTIALIASING,
-	             RenderingHints.VALUE_ANTIALIAS_ON);		
-	    graph2d.setRenderingHints(rh);
-	   
-		
-	   
+	public void reset(){
+		this.status = PIECE_STATUS_BASED;
+		this.winPathIndex =0;
+		this.round =1;
+		getRes(type);
 	}
+	
 	
 	private void getRes(String type){
 		
@@ -118,6 +113,12 @@ public class GamePiece extends JComponent implements BoardConstants{
 		}
 	}
 	
+	
+	/**
+	 * @Doc The heart of the piece class. Responsible for redrawing a piece at a specified point.
+	 * @param graph2d
+	 * @param location
+	 */
 	public void placePiece(Graphics2D graph2d,Point location){
 		if(location != this.location){
 			//graph2d.clearRect((int)this.location.getX(), (int)this.location.getY(), 30, 45);
@@ -132,8 +133,8 @@ public class GamePiece extends JComponent implements BoardConstants{
 		}
 		
 		graph2d.drawImage(pieceImage,(int)this.location.getX()-3,(int)this.location.getY()-45,callerObserver);
-		graph2d.setColor(Color.BLACK);
-		graph2d.drawString("|"+(int)this.location.getX()+","+(int)this.location.getY()+"|"+this.pathIndex,(int)this.location.getX()+20,(int)this.location.getY()-45);
+		//graph2d.setColor(Color.BLACK);
+	//	graph2d.drawString("|"+(int)this.location.getX()+","+(int)this.location.getY()+"|"+this.pathIndex,(int)this.location.getX()+20,(int)this.location.getY()-45);
 	}
 
 	
@@ -201,6 +202,18 @@ public class GamePiece extends JComponent implements BoardConstants{
 	public void setStatus(String newStatus){
 		this.status = newStatus;
 		
+	}
+	
+	public void offsetPiece(String direction){
+		int offset=0;
+		if(direction.contains("left")){
+			offset = -5;
+		}
+		else if(direction.contains("right")){
+			offset=5;
+		}
+		
+		movePiece(new Point((int)location.getX()+offset,(int)location.getY()));
 	}
 
 	

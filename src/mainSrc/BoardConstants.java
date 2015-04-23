@@ -139,36 +139,12 @@ public interface BoardConstants {
 			new Point(390,440)
 		};
 		
-		//Lose Jump Spots. These are the resting places of the fallen
-			//listed in order from bottom to top
-		Point [] BLUE_LOSE_JUMPSPOTS ={
-				new Point(90,740),	
-				new Point(90,680),
-				new Point(90,620),
-				new Point(90,560)
+	//Score display  points
+	Point RED_SCORE_DISPLAY = new Point(90,200);
+	Point BLUE_SCORE_DISPLAY = new Point(90,620);
+	Point GREEN_SCORE_DISPLAY = new Point(810-30,200);
+	Point YELLOW_SCORE_DISPLAY = new Point(810-30,620);
 		
-			};
-			Point [] GREEN_LOSE_JUMPSPOTS ={
-				new Point(810,320),	
-				new Point(810,260),
-				new Point(810,200),
-				new Point(810,140)
-					
-			};
-			Point [] YELLOW_LOSE_JUMPSPOTS ={
-				new Point(810,740),	
-				new Point(810,680),
-				new Point(810,620),
-				new Point(810,560)
-		
-			};
-			Point [] RED_LOSE_JUMPSPOTS ={
-				new Point(90,320),	
-				new Point(90,260),
-				new Point(90,200),
-				new Point(90,140)
-				
-			};
 			
 	//game piece starting path index offsets
 			int BLUE_PIECE_STARTING_OFFSET =0;

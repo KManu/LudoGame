@@ -67,6 +67,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	//private AudioPlayer gameMusic;
 	
 
+	
 	int currentPlayerIndex=0;
 
 	public LudoBoard(){		
@@ -114,13 +115,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		screenY = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(sizeWidth,sizeHeight);
-
 		getFrames()[0].setLocation(screenX/300,screenY/8);
 		setResizable(true);
-
 		getFrames()[0].setLocation(screenX/7,screenY/20);
 		setResizable(true);
-
 		addKeyListener(this);
 		
 		//init methods called here
@@ -140,9 +138,13 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		setVisible(true);
 	}
 	
+	/**
+	 * This class is responsible for resetting the board and all pieces to the inital state. 
+	 * It is called when the game is won.
+	 * @param none
+	 */
 	private void reset(){
-		//Exact copy of the constructor responsible for resetting the entire board when called.
-		// Used to reinitialize the board of sorts 
+		
 		
 		 dieRollVal=0;
 		 testIterator=0;
@@ -185,6 +187,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		setVisible(true);
 	}
 	
+	/**
+	 * Responsible for initializing the arrays of players and game pieces
+	 * @param none 
+	 */
 	private void initBoard(){
 		
 		//init the players
@@ -231,21 +237,38 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	    graph2d.setRenderingHints(rh);
 		drawBoard(graph2d);
 		placeBoardPieces(graph2d);
-
-
 	    //drawGrid(graph2d);
 	    scoreDisp(graph2d);
 	}
 	
+	/**
+	 * Responsible for drawing and displaying the current game scores.  
+	 * @param graph2d
+	 */
 	private void scoreDisp(Graphics2D graph2d){
-		graph2d.setColor(Color.white);
-		int i=0;
-		for(Player player : players){
-			graph2d.drawString(player.color+":"+player.score, 30,140+(UNITGRID*i));
-			i++;
-		}
+		//player order is
+		//blue
+		//red
+		//green
+		//yellow
+		Font scoreFont = new Font(Font.SERIF,Font.BOLD,60);
+		graph2d.setFont(scoreFont);
+		graph2d.setColor(LUDO_BLUE);
+		graph2d.drawString(players[0].score+"", (int)BLUE_SCORE_DISPLAY.getX(), (int)BLUE_SCORE_DISPLAY.getY());
+		graph2d.setColor(LUDO_RED);
+		graph2d.drawString(players[1].score+"", (int)RED_SCORE_DISPLAY.getX(), (int)RED_SCORE_DISPLAY.getY());
+		graph2d.setColor(LUDO_GREEN);
+		graph2d.drawString(players[2].score+"", (int)GREEN_SCORE_DISPLAY.getX(), (int)GREEN_SCORE_DISPLAY.getY());
+		graph2d.setColor(LUDO_YELLOW);
+		graph2d.drawString(players[3].score+"", (int)YELLOW_SCORE_DISPLAY.getX(), (int)YELLOW_SCORE_DISPLAY.getY());
+		
+		
 	}
 	
+	/**
+	 * Draws the game board, consisting of the jump spots, lines, and bases.
+	 * @param graph2d
+	 */
 	private void drawBoard(Graphics2D graph2d){
 		//Drawing paths
 	    graph2d.setStroke(new BasicStroke(3));
@@ -340,6 +363,15 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	    
 	}
 	
+	/**
+	 * Helper function used to easily draw a number of jump spots, in a particular direction, 
+	 * based on the parameters passed to it
+	 * @param startX
+	 * @param startY
+	 * @param number
+	 * @param graph2d
+	 * @param orientation
+	 */
 	private void drawSpots(int startX, int startY, int number, Graphics2D graph2d, String orientation){
 		//loop the creation of the jump spots along the paths
 		int horz=1, vert=1;
@@ -355,6 +387,12 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		}
 	}
 	
+	
+	/**
+	 * Draws a grid over the entire board, and also displays the coordinates of each grid line intersection.
+	 * Very helpful for debugging interface design.
+	 * @param graph2d
+	 */
 	private void drawGrid(Graphics graph2d){
 		//Drawing guide grids
 	    //Vertical grids. Sweep across from left to right
@@ -407,7 +445,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	    
 	}
 	
-	
+	/**
+	 * Places the game pieces on the board, at their home bases.
+	 * @param graph2d
+	 */
 	private void placeBoardPieces(Graphics2D graph2d){
 		//Places the pieces at the points specified.
 	
@@ -441,36 +482,49 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	}
 	
 	
+	/**
+	 * Class responsible for moving an pieces along the board.
+	 * Has a timer which moves the piece, one spot along the board path, the number of steps 
+	 * @param piece
+	 * @param steps
+	 */
 	public void boardPieceTranslate(GamePiece piece,int steps){
 		//handles translating a piece along the board.
 		//uses a counter to move the piece one step at a time, the number of steps
-		piece.setStatus(PIECE_STATUS_ACTIVE);
-		if(pieceAnimTimer !=null){
+		if(piece.status.contains(PIECE_STATUS_SAFE)){
 			return;
 		}
-		pieceAnimTimer = new Timer(50,new ActionListener(){
-			int frames =1;
-			@Override
-			public void actionPerformed(ActionEvent arg0) {	
-					if(frames >= steps){
-						pieceAnimTimer.stop();
-						pieceAnimTimer=null;
-						piece.setStatus(PIECE_STATUS_WAITING);
-					}
-					piece.movePiece();
-					update((Graphics2D)getGraphics());
-					Graphics2D graph2d = (Graphics2D) getGraphics();
-					frames++;
+		else{
+			piece.setStatus(PIECE_STATUS_ACTIVE);
+			if(pieceAnimTimer !=null){
+				return;
 			}
-		});
-		pieceAnimTimer.start();
+			pieceAnimTimer = new Timer(300,new ActionListener(){
+				int frames =1;
+				@Override
+				public void actionPerformed(ActionEvent arg0) {	
+						if(frames >= steps){
+							pieceAnimTimer.stop();
+							pieceAnimTimer=null;
+							piece.setStatus(PIECE_STATUS_WAITING);
+						}
+						piece.movePiece();
+						
+						update((Graphics2D)getGraphics());
+						Graphics2D graph2d = (Graphics2D) getGraphics();
+						frames++;
+				}
+			});
+			pieceAnimTimer.start();
+		}
+		
 	}
 	
 	//LISTENERS
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		drawGrid((Graphics2D)getGraphics());
+		//drawGrid((Graphics2D)getGraphics());
 		
 	}
 
@@ -498,10 +552,16 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		
 	}
 	
+	
+	/**
+	 * Responsible for automatically choosing the next player to play.
+	 * @param selectedPiece
+	 */
 	public void selectNextPlayer(int selectedPiece){
 		if(players[currentPlayerIndex].status.contains(PLAYER_STATUS_WON)){
 			currentPlayerIndex= (currentPlayerIndex+1)%4;
 		}
+		
 		if(currentPlayerIndex>=players.length-1){
 			currentPlayerIndex =0;
 		}
@@ -514,6 +574,12 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		players[currentPlayerIndex].chosePiece(players[currentPlayerIndex].activePieceIndex);
 	}
 
+	
+	/**
+	 * Increases the specified player score by one, and if the player has a score
+	 * of 4, triggers the win mechanism 
+	 * @param player
+	 */
 	public void increasePlayerScore(Player player){
 		if(player.score >=4){
 			player.status = PLAYER_STATUS_WON;
@@ -526,6 +592,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		
 	}
 	
+	/**
+	 * Returns the active game piece of the currently active player.
+	 * If the currently active piece is safe, the player score is increased, and the next piece is selected 
+	 */
 	public GamePiece getGamePieces(){
 		for(Player player: players){
 			if(player.status.equals(PLAYER_STATUS_ACTIVE) && player.color.equals("BLUE")){
@@ -574,6 +644,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		return null;
 	}
 	
+	
+	/**
+	 * Sets the status of all players to waiting. Called just before the next player is made active
+	 */
 	public void setPlayersWaiting(){
 		for(Player player : players){
 			if (player.status.equals(PLAYER_STATUS_LOST)|| player.status.equals(PLAYER_STATUS_WON)||player.status.equals(PLAYER_STATUS_WAITING)){
@@ -585,6 +659,11 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 			
 		}
 	}
+	
+	/**
+	 * Called when a player has won. Sets all the other players to a lost status,
+	 * then displays a win dialog. After, resets the board
+	 */
 	public void setPlayersLost(){
 		Player winner=null;
 		for(Player player : players){
@@ -605,6 +684,60 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		reset();
 	}
 	
+	
+	/**
+	 * Responsible for checking all the pieces for possible location conflicts. 
+	 * Depending on the conflict detected, it either offsets the piece, or removes one piece 
+	 * and returns it to it's base
+	 */
+	public void checkForConflict(){
+		/*loop over all the game pieces, and check if there are any location conflicts.
+		if of the same piece, offset. If different pieces, return to base*/
+		
+		
+		
+		ArrayList<GamePiece> totalPieces = new ArrayList<GamePiece>(); //arraylist to hold all board pieces in one data structure
+		for(GamePiece piece:bluePieces){
+			totalPieces.add(piece);
+		}
+		for(GamePiece piece:redPieces){
+			totalPieces.add(piece);
+		}
+		for(GamePiece piece: greenPieces){
+			totalPieces.add(piece);
+		}
+		for(GamePiece piece :yellowPieces){
+			totalPieces.add(piece);
+		}
+			totalPieces.trimToSize();
+			
+		//binary search to find conflicts, if any
+		for(int i=0; i< totalPieces.size();i++){
+			
+			for(int j =i+1; j<totalPieces.size();j++){
+				if(totalPieces.get(i).location == totalPieces.get(j).location){ //conflict found
+					if(!totalPieces.get(i).type.contains(totalPieces.get(j).type) ){//same color? then offset
+						totalPieces.get(i).offsetPiece("left");
+						totalPieces.get(j).offsetPiece("right");
+						update((Graphics2D)getGraphics());
+					}
+					else{ //not the same color, knock off the waiting one, and leave the active one
+						if(totalPieces.get(i).status.contains(PIECE_STATUS_WAITING)){
+							totalPieces.get(i).reset();
+							update((Graphics2D)getGraphics());
+						}
+						else if(totalPieces.get(j).status.contains(PIECE_STATUS_WAITING)){
+							totalPieces.get(j).reset();
+							update((Graphics2D)getGraphics());
+						}
+					}
+				}
+			}
+			
+		}
+	}
+	
+	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		/** TODO 
@@ -613,14 +746,11 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		 */
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
 			
-				//dieRollVal =ludoDie.roll();
-				dieRollVal =1;
+				dieRollVal =ludoDie.roll();
+				//dieRollVal =40;
 				selectNextPlayer(dieRollVal%4);
 				boardPieceTranslate(getGamePieces(),dieRollVal);
-			
-			
-			
-			
+				checkForConflict();
 		}
 			
 	}
@@ -637,6 +767,11 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		
 	}
 	
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public long playSound(String url) {
 	    try {
 	    	String file = "./res/audio/" + url;
