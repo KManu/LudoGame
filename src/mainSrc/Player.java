@@ -2,17 +2,18 @@ package mainSrc;
 
 
 public class Player implements BoardConstants {
-	String playerStatus;
+	String status;
 	String color;
-	private int score;
+	int score;
 	int activePieceIndex;
+	int currentLoseIndex=0;
 	GamePiece [] pieces;
 	
 	public Player(String color){
 		setColor(color);
 		activePieceIndex = 0;
 		score =0;
-		playerStatus= PLAYER_STATUS_WAITING;
+		status= PLAYER_STATUS_WAITING;
 	}
 	
 	public void setPieces(GamePiece [] pieces){
@@ -22,7 +23,7 @@ public class Player implements BoardConstants {
 		this.color = color.toUpperCase();
 	}
 	public void setStatus(String status){
-		this.playerStatus = status;
+		this.status = status;
 	}
 	public void setScore (int score){
 		this.score = score;

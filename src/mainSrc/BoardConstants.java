@@ -112,7 +112,7 @@ public interface BoardConstants {
 			//listed in order from outer to inner, 0->3
 		Point [] BLUE_WIN_JUMPSPOTS ={
 			new Point(450,740),	
-			new Point(450,740),
+			new Point(450,680),
 			new Point(450,620),
 			new Point(450,560),
 			new Point(450,500)
@@ -125,7 +125,7 @@ public interface BoardConstants {
 			new Point(450,380)	
 		};
 		Point [] YELLOW_WIN_JUMPSPOTS ={
-			new Point(750,380),	
+			new Point(750,440),	
 			new Point(690,440),
 			new Point(630,440),
 			new Point(570,440),
@@ -138,6 +138,43 @@ public interface BoardConstants {
 			new Point(330,440),
 			new Point(390,440)
 		};
+		
+		//Lose Jump Spots. These are the resting places of the fallen
+			//listed in order from bottom to top
+		Point [] BLUE_LOSE_JUMPSPOTS ={
+				new Point(90,740),	
+				new Point(90,680),
+				new Point(90,620),
+				new Point(90,560)
+		
+			};
+			Point [] GREEN_LOSE_JUMPSPOTS ={
+				new Point(810,320),	
+				new Point(810,260),
+				new Point(810,200),
+				new Point(810,140)
+					
+			};
+			Point [] YELLOW_LOSE_JUMPSPOTS ={
+				new Point(810,740),	
+				new Point(810,680),
+				new Point(810,620),
+				new Point(810,560)
+		
+			};
+			Point [] RED_LOSE_JUMPSPOTS ={
+				new Point(90,320),	
+				new Point(90,260),
+				new Point(90,200),
+				new Point(90,140)
+				
+			};
+			
+	//game piece starting path index offsets
+			int BLUE_PIECE_STARTING_OFFSET =0;
+			int GREEN_PIECE_STARTING_OFFSET =20;
+			int RED_PIECE_STARTING_OFFSET =10;
+			int YELLOW_PIECE_STARTING_OFFSET =30;
 	
 	//Die constants
 	public static final Dimension DIE_SIZE = new Dimension(50,50);
@@ -149,7 +186,6 @@ public interface BoardConstants {
 	String PIECE_STATUS_ACTIVE = "Active";
 	String PIECE_STATUS_WAITING = "Waiting";
 	String PIECE_STATUS_BASED ="Based";
-	String PIECE_STATUS_KICKED_OUT ="Dead";
 	String PIECE_STATUS_SAFE ="Ascended";
 	
 	String PLAYER_STATUS_ACTIVE= "Active";

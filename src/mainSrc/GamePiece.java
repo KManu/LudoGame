@@ -22,25 +22,35 @@ public class GamePiece extends JComponent implements BoardConstants{
 	/**
 	 * 
 	 */
-	//TODO: Find a way to make the piece move. A single step, in a direction. Can be chained.
+	
 	String type;
 	Image  pieceImage;
 	Graphics2D graph;
 	ImageObserver callerObserver;
 	Point location;
 	String status;
-	int pathIndex;
+	int pathIndex,winPathIndex;
 	Rectangle pieceBound;
 	Color pieceColor;
+	int pieceOffset ;
+	int round;
+	int arrayPos;
 	private static final long serialVersionUID = 1L;
 	
-	public GamePiece(String type,Graphics2D graph2d, Point location,ImageObserver callerObs){
+	public GamePiece(String type,
+			Graphics2D graph2d, 
+			Point location,
+			ImageObserver callerObs,
+			int arrayPos){
 		this.type = type.toUpperCase();
 		this.callerObserver = callerObs;
 		this.location = location;
 		this.graph = graph2d;
 		this.status = PIECE_STATUS_BASED;
+		this.winPathIndex=0;
+		this.arrayPos = arrayPos;
 		getRes(this.type);
+		round = 1;
 		//placePiece(graph2d, location);
 		//pieceHalo = new ActiveHalo(, (int)this.location.getY()-10, UNITGRID/2, UNITGRID/2, this.pieceColor);
 		pieceBound = new Rectangle((int)this.location.getX(),(int)this.location.getY(),UNITGRID/2,UNITGRID/2);
@@ -66,7 +76,8 @@ public class GamePiece extends JComponent implements BoardConstants{
 		if(type.contains("YELLOW")){
 			try {
 				pieceImage = ImageIO.read(new File(".//res/gamePieces/yellowPiece.png"));
-				pathIndex =30; 
+				pathIndex =YELLOW_PIECE_STARTING_OFFSET; 
+				pieceOffset = YELLOW_PIECE_STARTING_OFFSET; 
 				pieceColor= LUDO_YELLOW;
 			} catch (IOException e) {
 				System.out.println("Game Piece IO Error");
@@ -75,7 +86,8 @@ public class GamePiece extends JComponent implements BoardConstants{
 		else if(type.contains("RED")){
 			try {
 				pieceImage = ImageIO.read(new File(".//res/gamePieces/redPiece.png"));
-				pathIndex= 10;
+				pathIndex= RED_PIECE_STARTING_OFFSET;
+				pieceOffset = RED_PIECE_STARTING_OFFSET;
 				pieceColor= LUDO_RED;
 			} catch (IOException e) {
 			
@@ -85,7 +97,8 @@ public class GamePiece extends JComponent implements BoardConstants{
 		else if(type.contains("BLUE")){
 			try {
 				pieceImage = ImageIO.read(new File(".//res/gamePieces/bluePiece.png"));
-				pathIndex = 0;
+				pathIndex = BLUE_PIECE_STARTING_OFFSET;
+				pieceOffset = BLUE_PIECE_STARTING_OFFSET;
 				pieceColor= LUDO_BLUE;
 			} catch (IOException e) {
 				
@@ -95,7 +108,8 @@ public class GamePiece extends JComponent implements BoardConstants{
 		else if(type.contains("GREEN")){
 			try {
 				pieceImage = ImageIO.read(new File(".//res/gamePieces/greenPiece.png"));
-				pathIndex = 20;
+				pathIndex = GREEN_PIECE_STARTING_OFFSET;
+				pieceOffset = GREEN_PIECE_STARTING_OFFSET;
 				pieceColor= LUDO_GREEN;
 			} catch (IOException e) {
 				
@@ -118,6 +132,8 @@ public class GamePiece extends JComponent implements BoardConstants{
 		}
 		
 		graph2d.drawImage(pieceImage,(int)this.location.getX()-3,(int)this.location.getY()-45,callerObserver);
+		graph2d.setColor(Color.BLACK);
+		graph2d.drawString("|"+(int)this.location.getX()+","+(int)this.location.getY()+"|"+this.pathIndex,(int)this.location.getX()+20,(int)this.location.getY()-45);
 	}
 
 	
@@ -126,16 +142,59 @@ public class GamePiece extends JComponent implements BoardConstants{
 	}
 	
 	public void movePiece(){
-		//loop through the steps, increasing the path location by the step
+		//increase the path location by the one, if the piece hasn't ascended
 		
+				
+				
+		if(this.status.contains(PIECE_STATUS_ACTIVE)||this.status.contains(PIECE_STATUS_WAITING)){
 			
-			if(pathIndex >39){
-				pathIndex=0;
+			if(round==2&&(pathIndex -pieceOffset==0)&&type.contains("BLUE")){ //piece is at ascend spot
+				movePiece(BLUE_WIN_JUMPSPOTS[winPathIndex]);
+				if(winPathIndex ==4-arrayPos){
+					status = PIECE_STATUS_SAFE;
+				}
+				else{
+					winPathIndex= (winPathIndex+1)%5;
+				}
+				
 			}
-			//this.location = BOARD_PATH_JUMPSPOTS[pathIndex];
-			movePiece(BOARD_PATH_JUMPSPOTS[pathIndex]);
-			pathIndex++;
-		
+			else if(round==2&&(pathIndex -pieceOffset==0) && type.contains("YELLOW")){ //piece is at ascend spot
+				movePiece(YELLOW_WIN_JUMPSPOTS[winPathIndex]);
+				if(winPathIndex ==4-arrayPos){
+					status = PIECE_STATUS_SAFE;
+				}
+				else{
+					winPathIndex= (winPathIndex+1)%5;
+				}
+			}
+			else if(round==2&&(pathIndex -pieceOffset==0)&&type.contains("GREEN")){ //piece is at ascend spot
+				movePiece(GREEN_WIN_JUMPSPOTS[winPathIndex]);
+				if(winPathIndex ==4-arrayPos){
+					status = PIECE_STATUS_SAFE;
+				}
+				else{
+					winPathIndex= (winPathIndex+1)%5;
+				}
+			}
+			else if(round==2&&(pathIndex -pieceOffset==0)&&type.contains("RED")){ //piece is at ascend spot
+				movePiece(RED_WIN_JUMPSPOTS[winPathIndex]);
+				if(winPathIndex ==4-arrayPos){
+					status = PIECE_STATUS_SAFE;
+				}
+				else{
+					winPathIndex= (winPathIndex+1)%5;
+				}
+			}
+			else{
+				//this.location = BOARD_PATH_JUMPSPOTS[pathIndex];
+				movePiece(BOARD_PATH_JUMPSPOTS[pathIndex]);
+				pathIndex = (pathIndex+1)%38;
+				round = 2;
+			}
+			
+		}
+				
+				
 		
 	}
 	

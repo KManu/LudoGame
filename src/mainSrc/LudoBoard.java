@@ -18,15 +18,14 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	private static final long serialVersionUID = 1L;
 
 	
-	int testIterator=0;
+	
 	int screenX,screenY ;
 	public static int sizeWidth=BoardConstants.BOARD_SIZE.width;
 	public static int sizeHeight=BoardConstants.BOARD_SIZE.height;
 	int jumpSpotWidth = BoardConstants.BOARD_JUMPSPOT_SIZE.width;
 	int jumpSpotHeight = BoardConstants.BOARD_JUMPSPOT_SIZE.height;
 	LudoDie ludoDie= new LudoDie();
-	Vector<String> mapKeys = new Vector<String>();
-	Vector<Point> mapVals = new Vector<Point>();
+
 	
 	//Players
 	Player [] players= new Player[4]; 
@@ -40,8 +39,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	GamePiece [] yellowPieces= new GamePiece[4];
 	
 	int dieRollVal=0;
+	int testIterator=0;
 	Timer pieceAnimTimer=null;
 	int currentPlayerIndex=0;
+	
 	public LudoBoard(){		
 		
 		super("Super awesome Ludo game");
@@ -77,9 +78,48 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		add(mainPane);
 		setContentPane(mainPane);
 		setVisible(true);
+	}
+	
+	private void reset(){
+		//Exact copy of the constructor responsible for resetting the entire board when called.
+		// Used to reinitialize the board of sorts 
 		
+		 dieRollVal=0;
+		 testIterator=0;
+		 pieceAnimTimer=null;
+		 currentPlayerIndex=0;
+		 
 		
+		//Setting Jframe constants and basic init
+		screenX = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+		screenY = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(sizeWidth,sizeHeight);
+
+		getFrames()[0].setLocation(screenX/300,screenY/8);
+		setResizable(true);
+
+		getFrames()[0].setLocation(screenX/7,screenY/20);
+		setResizable(false);
+
 		
+		addKeyListener(this);
+		
+		//init methods called here
+		initBoard();
+		//Setting up panes
+		JPanel mainPane = new JPanel(new BorderLayout());
+		mainPane.setSize(new Dimension(getRootPane().getMaximumSize()));
+		mainPane.setBackground(new Color(61,61,61));
+		//Die settings
+		//ludoDie.setLoc(mainPane.getWidth()/2 -25, mainPane.getHeight()/2 -50);
+
+		
+		mainPane.add(ludoDie);
+		mainPane.addMouseListener(this);
+		add(mainPane);
+		setContentPane(mainPane);
+		setVisible(true);
 	}
 	
 	private void initBoard(){
@@ -93,28 +133,28 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		//Set the pieces to their initial board positions
 		//blue pieces
 		Graphics2D graph2d= (Graphics2D) getGraphics();
-		bluePieces[0]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[0], this);
-		bluePieces[1]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[1], this);
-		bluePieces[2]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[2], this);
-		bluePieces[3]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[3], this);
+		bluePieces[0]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[0], this,0);
+		bluePieces[1]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[1], this,1);
+		bluePieces[2]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[2], this,2);
+		bluePieces[3]= new GamePiece(players[0].color, graph2d, BLUE_BASE_JUMPSPOTS[3], this,3);
 		
 		//green pieces
-		greenPieces[0]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[0], this);
-		greenPieces[1]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[1], this);
-		greenPieces[2]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[2], this);
-		greenPieces[3]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[3], this);
+		greenPieces[0]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[0], this,0);
+		greenPieces[1]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[1], this,1);
+		greenPieces[2]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[2], this,2);
+		greenPieces[3]= new GamePiece(players[2].color, graph2d, GREEN_BASE_JUMPSPOTS[3], this,3);
 
 		//red pieces
-		redPieces[0]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[0], this);
-		redPieces[1]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[1], this);
-		redPieces[2]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[2], this);
-		redPieces[3]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[3], this);
+		redPieces[0]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[0], this,0);
+		redPieces[1]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[1], this,1);
+		redPieces[2]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[2], this,2);
+		redPieces[3]= new GamePiece(players[1].color, graph2d, RED_BASE_JUMPSPOTS[3], this,3);
 			
 		//yellow pieces
-		yellowPieces[0]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[0], this);
-		yellowPieces[1]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[1], this);
-		yellowPieces[2]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[2], this);
-		yellowPieces[3]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[3], this);
+		yellowPieces[0]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[0], this,0);
+		yellowPieces[1]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[1], this,1);
+		yellowPieces[2]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[2], this,2);
+		yellowPieces[3]= new GamePiece(players[3].color, graph2d, YELLOW_BASE_JUMPSPOTS[3], this,3);
 		
 		
 	}
@@ -129,8 +169,18 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		drawBoard(graph2d);
 		placeBoardPieces(graph2d);
 		
-	    drawGrid(graph2d);
-	  
+	    //drawGrid(graph2d);
+	    scoreDisp(graph2d);
+	}
+	
+	private void scoreDisp(Graphics2D graph2d){
+		graph2d.setColor(Color.white);
+		int i=0;
+		for(Player player : players){
+			graph2d.drawString(player.color+":"+player.score, 30,140+(UNITGRID*i));
+			i++;
+		}
+		//
 	}
 	
 	private void drawBoard(Graphics2D graph2d){
@@ -335,7 +385,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		if(pieceAnimTimer !=null){
 			return;
 		}
-		pieceAnimTimer = new Timer(500,new ActionListener(){
+		pieceAnimTimer = new Timer(50,new ActionListener(){
 			int frames =1;
 			@Override
 			public void actionPerformed(ActionEvent arg0) {	
@@ -386,6 +436,9 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	}
 	
 	public void selectNextPlayer(int selectedPiece){
+		if(players[currentPlayerIndex].status.contains(PLAYER_STATUS_WON)){
+			currentPlayerIndex= (currentPlayerIndex+1)%4;
+		}
 		if(currentPlayerIndex>=players.length-1){
 			currentPlayerIndex =0;
 		}
@@ -398,19 +451,60 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		players[currentPlayerIndex].chosePiece(players[currentPlayerIndex].activePieceIndex);
 	}
 
+	public void increasePlayerScore(Player player){
+		if(player.score >=4){
+			player.status = PLAYER_STATUS_WON;
+			setPlayersLost(); // game is won
+		}
+		else{
+			player.score = player.score +1;
+		}
+		
+		
+	}
+	
 	public GamePiece getGamePieces(){
 		for(Player player: players){
-			if(player.playerStatus.equals(PLAYER_STATUS_ACTIVE) && player.color.equals("BLUE")){
-				return bluePieces[player.activePieceIndex];
+			if(player.status.equals(PLAYER_STATUS_ACTIVE) && player.color.equals("BLUE")){
+				if(bluePieces[player.activePieceIndex].status.contains(PIECE_STATUS_SAFE)){//if the current active piece is safe, increment the active index and return the next piece
+					increasePlayerScore(player);
+					player.activePieceIndex = (player.activePieceIndex+1)%4;
+					return bluePieces[player.activePieceIndex];
+				}
+				else{
+					return bluePieces[player.activePieceIndex];
+				}
+				
 			}
-			else if(player.playerStatus.equals(PLAYER_STATUS_ACTIVE )&& player.color.equals("GREEN")){
-				return greenPieces[player.activePieceIndex];			
+			else if(player.status.equals(PLAYER_STATUS_ACTIVE )&& player.color.equals("GREEN")){
+				if(greenPieces[player.activePieceIndex].status.contains(PIECE_STATUS_SAFE)){//if the current active piece is safe, increment the active index and return the next piece
+					increasePlayerScore(player);
+					player.activePieceIndex = (player.activePieceIndex+1)%4;
+					return bluePieces[player.activePieceIndex];
+				}
+				else{
+					return greenPieces[player.activePieceIndex];
+				}		
 			}
-			else if(player.playerStatus.equals(PLAYER_STATUS_ACTIVE)&& player.color.equals("RED")){
-				return redPieces[player.activePieceIndex];
+			else if(player.status.equals(PLAYER_STATUS_ACTIVE)&& player.color.equals("RED")){
+				if(redPieces[player.activePieceIndex].status.contains(PIECE_STATUS_SAFE)){//if the current active piece is safe, increment the active index and return the next piece
+					increasePlayerScore(player);
+					player.activePieceIndex = (player.activePieceIndex+1)%4;
+					return bluePieces[player.activePieceIndex];
+				}
+				else{
+					return redPieces[player.activePieceIndex];
+				}
 			}
-			else if(player.playerStatus.equals(PLAYER_STATUS_ACTIVE)&& player.color.equals("YELLOW")){
-				return yellowPieces[player.activePieceIndex];
+			else if(player.status.equals(PLAYER_STATUS_ACTIVE)&& player.color.equals("YELLOW")){
+				if(yellowPieces[player.activePieceIndex].status.contains(PIECE_STATUS_SAFE)){//if the current active piece is safe, increment the active index and return the next piece
+					increasePlayerScore(player);
+					player.activePieceIndex = (player.activePieceIndex+1)%4;
+					return bluePieces[player.activePieceIndex];
+				}
+				else{
+					return yellowPieces[player.activePieceIndex];
+				}
 			}
 			
 		}
@@ -419,7 +513,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	
 	public void setPlayersWaiting(){
 		for(Player player : players){
-			if (player.playerStatus.equals(PLAYER_STATUS_LOST)|| player.playerStatus.equals(PLAYER_STATUS_WON)||player.playerStatus.equals(PLAYER_STATUS_WAITING)){
+			if (player.status.equals(PLAYER_STATUS_LOST)|| player.status.equals(PLAYER_STATUS_WON)||player.status.equals(PLAYER_STATUS_WAITING)){
 				continue;
 			}
 			else {
@@ -428,6 +522,26 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 			
 		}
 	}
+	public void setPlayersLost(){
+		Player winner=null;
+		for(Player player : players){
+			if (player.status.equals(PLAYER_STATUS_WON)){
+				winner = player;
+				getGraphics().drawString(player.color+" has won!!", 440,440);
+				continue;
+			}
+			else {
+				player.setStatus(PLAYER_STATUS_LOST);
+			}
+			
+		}
+		//y2k code here 
+		JOptionPane.showMessageDialog(this,
+				"Congratulations, "+winner.color+" won! Click okay to reset the game.","Message",
+				JOptionPane.INFORMATION_MESSAGE);
+		reset();
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		/** TODO 
@@ -436,9 +550,9 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		 */
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
 			
-				dieRollVal =ludoDie.roll();
+				//dieRollVal =ludoDie.roll();
+				dieRollVal =1;
 				selectNextPlayer(dieRollVal%4);
-				
 				boardPieceTranslate(getGamePieces(),dieRollVal);
 			
 			
