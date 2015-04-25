@@ -722,10 +722,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		}
 		
 		String fontStyle = "<style>.myFont{font-family:'Calibri';font-size: 14px;} strong{color:#0082b3}</style>";
-		String htmlStyle = "<style>.winFont{font-family:'Calibri';font-size: 14px;} strong{"+htmlColor+"}</style>";
+		//String htmlStyle = "<style>.winFont{font-family:'Calibri';font-size: 14px;} strong{"+htmlColor+"}</style>";
 		String aboutString = fontStyle+"<div class=\"myFont\"><strong>Congratulations!</strong>"
 				+ "<hr>"
-				+ htmlStyle+"<em class=\"winFont\">"+winner.color+"</em>"
+				+ winner.color
 				+ " won!"
 				+ " Click OK to reset the game.</div>";
 		JEditorPane aboutLabel = new JEditorPane();
