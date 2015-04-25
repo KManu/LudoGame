@@ -1,8 +1,4 @@
 package mainSrc;
-import mainSrc.*;
-
-import javax.swing.*;
-
 import java.awt.*;
 
 /*
@@ -17,6 +13,7 @@ public interface BoardConstants {
 	public static final Color LUDO_YELLOW = new Color(255,228,0);
 	public static final Color LUDO_BLUE = new Color(5,184,243);
 	public static final Color LUDO_GREEN = new Color(16,243,5);
+	public static final Color MENU_COLOR = new Color(0,130,179);
 	
 	//Board constants
 	public static final Dimension BOARD_SIZE = new Dimension(900, 900);

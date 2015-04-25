@@ -4,24 +4,10 @@
  */
 package mainSrc;
 
-import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.Timer;
-
 import java.awt.*;
 import java.awt.event.*;
-
-
-import java.io.File;
-import java.io.FileInputStream;
-
-import java.awt.geom.Ellipse2D;
-
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.awt.geom.Ellipse2D;
-
 import java.util.*;
 
 public class LudoBoard extends JFrame implements BoardConstants, MouseListener , KeyListener, ActionListener  {
@@ -78,9 +64,12 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		super("Super awesome Ludo game");
 		
 		//Menu Bar for Game
+		//UIManager.put("MenuItem.background", Color.CYAN);
+		//UIManager.put("MenuItem.opaque", true);
 
 		// Creates a menubar for a JFrame
 		JMenuBar menuBar = new JMenuBar();
+		//menuBar.setBackground(LUDO_BLUE);
 
 		// Add the menubar to the frame
 		setJMenuBar(menuBar);
@@ -108,6 +97,22 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		musicMenu.add(playSongAction);
 		musicMenu.add(stopSongAction);
 		
+		//Look and Feel of the menu bar
+		String fontName = "Poor Richard";
+		int fontStyle1 = Font.BOLD;
+		int fontStyle2 = Font.PLAIN;
+		int fontSize1 = 16;
+		int fontSize2 = 14;
+		gameMenu.setFont(new Font(fontName, fontStyle1, fontSize1));
+		gameMenu.setForeground(MENU_COLOR);
+		musicMenu.setFont(new Font(fontName, fontStyle1, fontSize1));
+		musicMenu.setForeground(MENU_COLOR);
+		nextSongAction.setFont(new Font(fontName, fontStyle2, fontSize2));
+		playSongAction.setFont(new Font(fontName, fontStyle2, fontSize2));
+		stopSongAction.setFont(new Font(fontName, fontStyle2, fontSize2));
+		helpAction.setFont(new Font(fontName, fontStyle2, fontSize2));
+		aboutAction.setFont(new Font(fontName, fontStyle2, fontSize2));
+		
 		/*
 		nextSongAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -126,6 +131,8 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		screenX = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 		screenY = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		//setUndecorated(true);
 		setSize(sizeWidth,sizeHeight);
 		getFrames()[0].setLocation(screenX/300,screenY/8);
 		setResizable(true);
@@ -143,10 +150,10 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		//ludoDie.setLoc(mainPane.getWidth()/2 -25, mainPane.getHeight()/2 -50);
 		
 		mainPane.add(ludoDie);
-		mainPane.addMouseListener(this);
+		//mainPane.addMouseListener(this);
 		add(mainPane);
 		setContentPane(mainPane);
-
+		addMouseListener(this);
 		setVisible(true);
 	}
 	
@@ -445,10 +452,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	    		graph2d.drawString("("+(int)coordPoint.getY()+","+(int)coordPoint.getX()+")",sizeWidth/2 +(UNITGRID*i)-15, (UNITGRID*j)+UNITGRID/2);
 	    		
 	    		//placing number labels on the grid
-	    		//graph2d.drawString(String.valueOf(i+10),unitGrid/2+(unitGrid*j)+5, sizeHeight/2+(i*unitGrid)); 
-	    		
-	    		
-	    		
+	    		//graph2d.drawString(String.valueOf(i+10),unitGrid/2+(unitGrid*j)+5, sizeHeight/2+(i*unitGrid)); 	
 				 
 	    	}	  
 	    }
@@ -495,7 +499,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	
 	
 	/**
-	 * Class responsible for moving an pieces along the board.
+	 * Class responsible for moving a piece along the board.
 	 * Has a timer which moves the piece, one spot along the board path, the number of steps 
 	 * @param piece
 	 * @param steps
@@ -521,9 +525,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 						piece.setStatus(PIECE_STATUS_WAITING);
 					}
 					piece.movePiece();
-					
 					update((Graphics2D)getGraphics());
-					Graphics2D graph2d = (Graphics2D) getGraphics();
 					frames++;
 				}
 			});
@@ -535,9 +537,19 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	//LISTENERS
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
 		//drawGrid((Graphics2D)getGraphics());
+		Point me = e.getPoint();
+		Rectangle bounds = new Rectangle(0,0,100,100);
+		/*if((e.getX()>0 && e.getX()<100) && (e.getY()>0 && e.getY()<100)) //testing coordinate click
+		{
+			System.out.println("coordinates!");
+		}*/
 		
+		if(bounds.contains(me))
+		{
+			System.out.println("coordinates!");
+		}
 	}
 
 	@Override
@@ -688,11 +700,45 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 				player.setStatus(PLAYER_STATUS_LOST);
 			}
 			
-		}
+		}		
 		//y2k code here 
+		String htmlColor = null;
+		if(winner.color.contains("GREEN"))
+		{
+			htmlColor = "color:#10f305";
+		}
+		
+		if(winner.color.contains("BLUE"))
+		{
+			htmlColor = "color:#105b8f3";
+		}
+		if(winner.color.contains("RED"))
+		{
+			htmlColor = "color:#f3052c";	
+		}
+		if(winner.color.contains("YELLOW"))
+		{
+			htmlColor = "color:#ffe400";	
+		}
+		
+		String fontStyle = "<style>.myFont{font-family:'Calibri';font-size: 14px;} strong{color:#0082b3}</style>";
+		String htmlStyle = "<style>.winFont{font-family:'Calibri';font-size: 14px;} strong{"+htmlColor+"}</style>";
+		String aboutString = fontStyle+"<div class=\"myFont\"><strong>Congratulations!</strong>"
+				+ "<hr>"
+				+ htmlStyle+"<em class=\"winFont\">"+winner.color+"</em>"
+				+ " won!"
+				+ " Click OK to reset the game.</div>";
+		JEditorPane aboutLabel = new JEditorPane();
+		aboutLabel.setContentType("text/html; charset=utf-8");
+		aboutLabel.setEditable(false);
+		aboutLabel.setText(aboutString);
+		aboutLabel.setOpaque(false);
+		JOptionPane.showMessageDialog(this, aboutLabel,"Winner", JOptionPane.INFORMATION_MESSAGE);
+		
+		/*
 		JOptionPane.showMessageDialog(this,
 				"Congratulations, "+winner.color+" won! Click okay to reset the game.","Message",
-				JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.INFORMATION_MESSAGE);*/
 		reset();
 	}
 	
@@ -727,7 +773,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		for(int i=0; i< totalPieces.size();i++){
 			
 			for(int j =i+1; j<totalPieces.size();j++){
-				if(totalPieces.get(i).location == totalPieces.get(j).location){ //conflict found
+				if(totalPieces.get(i).pathIndex == totalPieces.get(j).pathIndex){ //conflict found
 					if(!totalPieces.get(i).type.contains(totalPieces.get(j).type) ){//same color? then offset
 						totalPieces.get(i).offsetPiece("left");
 						totalPieces.get(j).offsetPiece("right");
@@ -763,7 +809,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 				//dieRollVal =40;
 				selectNextPlayer(dieRollVal%4);
 				boardPieceTranslate(getGamePieces(),dieRollVal);
-				checkForConflict();
+				//checkForConflict();
 		}
 			
 	}
@@ -782,6 +828,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String fontStyle = "<style>.myFont{font-family:'Poor Richard';font-size: 14px;} strong{color:#0082b3}</style>";
 		Object source = e.getSource();
 		
 		if(source == nextSongAction)
@@ -812,37 +859,50 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		else if(source == aboutAction)
 		{	
 			//System.out.println("about");
-			String aboutString = "Developers<br>"
+			String aboutString = fontStyle+"<div class=\"myFont\"><strong>Developers</strong>"
 					+ "<hr>"
 					+ "Kwabena Manu<br>"
 					+ "Thomas K. Collins<br><br>"
-					+ "Supervisors<br>"
+					+ "<strong>Supervisors</strong><br>"
 					+ "<hr>"
 					+ "Dr. Isaac Nti<br>"
-					+ "Mr. Kwasi Adomako<br><br>";
+					+ "Mr. Kwasi Adomako<br><br></div>";
 			JEditorPane aboutLabel = new JEditorPane();
 			aboutLabel.setContentType("text/html; charset=utf-8");
-			aboutLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
 			aboutLabel.setEditable(false);
 			aboutLabel.setText(aboutString);
 			aboutLabel.setOpaque(false);
-			JOptionPane.showMessageDialog(null, aboutLabel,"About", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, aboutLabel,"About", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 		else if(source == helpAction)
 		{	
 			
 			//System.out.println("help");
-			String helpString = "Controls"
+			String helpString = fontStyle+"<div class=\"myFont\"><strong>Controls</strong>"
 					+ "<hr>"
-					+ "Spacebar: Roll Die";
+					+ "Spacebar &nbsp;  ==> &nbsp; Toss die</div>";
 			JEditorPane helpLabel = new JEditorPane();
 			helpLabel.setContentType("text/html; charset=utf-8");
-			//helpLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
 			helpLabel.setEditable(false);
 			helpLabel.setText(helpString);
 			helpLabel.setOpaque(false);
-			JOptionPane.showMessageDialog(null, helpLabel, "Help", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, helpLabel, "Help", JOptionPane.INFORMATION_MESSAGE);
 		}
+	}
+	
+	Image offScreenBuffer;
+	public void update(Graphics g)
+	{
+		Graphics gr; 
+		if (offScreenBuffer==null ||
+				(! (offScreenBuffer.getWidth(this) == this.getWidth()
+				&& offScreenBuffer.getHeight(this) == this.getHeight())))
+		{
+			offScreenBuffer = this.createImage(getWidth(), getHeight());
+		}
+		gr = offScreenBuffer.getGraphics();
+		paint(gr); 
+		g.drawImage(offScreenBuffer, 0, 0, this); 
 	}
 }

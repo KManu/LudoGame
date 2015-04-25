@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
-import mainSrc.*;
+
 
 //Subject InLab6
 
@@ -31,6 +31,7 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 	//Timer to control animation
 	Timer animTimer ;
 	public LudoDie(){
+		
 		setSize(dieCubeWidth,dieCubeHeight);
 		X1=LudoBoard.sizeWidth/2-32;
 		Y1 = LudoBoard.sizeHeight/2-80;
@@ -212,6 +213,5 @@ public class LudoDie extends JComponent implements BoardConstants, MouseListener
 		
 	}
 
-	
 
 }

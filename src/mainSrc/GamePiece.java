@@ -6,11 +6,8 @@
 package mainSrc;
 
 import javax.imageio.*;
-import javax.naming.Context;
 import javax.swing.*;
-
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.ImageObserver;
 import java.io.File;
@@ -134,12 +131,13 @@ public class GamePiece extends JComponent implements BoardConstants{
 		
 		graph2d.drawImage(pieceImage,(int)this.location.getX()-3,(int)this.location.getY()-45,callerObserver);
 		//graph2d.setColor(Color.BLACK);
-	//	graph2d.drawString("|"+(int)this.location.getX()+","+(int)this.location.getY()+"|"+this.pathIndex,(int)this.location.getX()+20,(int)this.location.getY()-45);
+		//graph2d.drawString("|"+(int)this.location.getX()+","+(int)this.location.getY()+"|"+this.pathIndex,(int)this.location.getX()+20,(int)this.location.getY()-45);
 	}
 
 	
 	public void movePiece(Point newLocation){
 		this.location = new Point((int)newLocation.getX()-10,(int)newLocation.getY()+10);
+		new AudioPlayer(1);
 	}
 	
 	public void movePiece(){

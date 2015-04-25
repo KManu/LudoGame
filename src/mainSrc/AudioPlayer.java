@@ -15,6 +15,7 @@ public class AudioPlayer{
 	private boolean isPlaying;
 	private final Object lockObj = new Object();
 	String[] songTitles = {"nr", "jean", "afrola", "summer", "cowboy", "festival", "score", "jurassic", "lucky", "more", "bokoor", "redemption"};
+	String moveSound = "boing";
 	private Thread soundThread;
 	boolean nextSonged = false;
 	//boolean previousSonged = false;
@@ -31,6 +32,10 @@ public class AudioPlayer{
 		
 		index = (0 + (int)(Math.random() * numOfSongs));
 		createPlayList();
+	}
+	
+	public AudioPlayer(int dummy) {
+		playSound(moveSound + ".wav");
 	}
 	
 	public long playSound(String url) {

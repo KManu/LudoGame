@@ -2,6 +2,7 @@ package mainSrc;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+
 import javax.swing.*;
 
 public class ActiveHalo extends JComponent implements ActionListener{
@@ -85,6 +86,21 @@ public class ActiveHalo extends JComponent implements ActionListener{
 	public void actionPerformed(ActionEvent ev) {
 		repaint();
 		
+	}
+	
+	Image offScreenBuffer;
+	public void update(Graphics g)
+	{
+		Graphics gr; 
+		if (offScreenBuffer==null ||
+				(! (offScreenBuffer.getWidth(this) == this.getWidth()
+				&& offScreenBuffer.getHeight(this) == this.getHeight())))
+		{
+			offScreenBuffer = this.createImage(getWidth(), getHeight());
+		}
+		gr = offScreenBuffer.getGraphics();
+		paint(gr); 
+		g.drawImage(offScreenBuffer, 0, 0, this); 
 	}
 
 	
