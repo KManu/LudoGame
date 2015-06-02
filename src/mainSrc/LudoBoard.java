@@ -135,7 +135,7 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		//setUndecorated(true);
 		setSize(sizeWidth,sizeHeight);
 		getFrames()[0].setLocation(screenX/300,screenY/8);
-		setResizable(true);
+		setResizable(false);
 		getFrames()[0].setLocation(screenX/7,screenY/20);
 		setResizable(true);
 		addKeyListener(this);
@@ -803,13 +803,14 @@ public class LudoBoard extends JFrame implements BoardConstants, MouseListener ,
 		 * SPACEBAR - Roll die 
 		 */
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
+			selectNextPlayer(dieRollVal%4);
+			dieRollVal =ludoDie.roll();
+			boardPieceTranslate(getGamePieces(),dieRollVal);
+				
+		}
+		
+		if(arg0.getKeyCode() == KeyEvent.VK_S){
 			
-
-				dieRollVal =ludoDie.roll();
-				//dieRollVal =40;
-				selectNextPlayer(dieRollVal%4);
-				boardPieceTranslate(getGamePieces(),dieRollVal);
-				//checkForConflict();
 		}
 			
 	}
